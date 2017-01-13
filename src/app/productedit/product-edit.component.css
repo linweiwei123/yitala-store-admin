@@ -1,0 +1,47 @@
+.add-img-block{
+    width:200px;
+    height: 200px;
+    border: 3px dotted #CCC;
+    border-radius: 25px;
+    margin: 35px 10px 20px 10px;
+}
+.add-img-block:hover{
+    background-size:30px 30px;
+    background-image:-webkit-linear-gradient(135deg,#F6F6F6 25%,transparent 25%,transparent 50%,#F6F6F6 50%,#F6F6F6 75%,transparent 75%,transparent);
+    background-image:linear-gradient(-45deg,#F6F6F6 25%,transparent 25%,transparent 50%,#F6F6F6 50%,#F6F6F6 75%,transparent 75%,transparent);
+    -webkit-animation:stripes 2s linear infinite;
+    animation:stripes 2s linear infinite;
+    cursor: pointer;
+}
+.add-img-block .dropify-message{
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.add-img-block input.upload{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    margin-top: -64px;
+    margin-right: 0px;
+    margin-right: -3px;
+}
+.add-img-block input.upload:hover{
+    cursor: pointer;
+}
+.dropify-message .fa-cloud-upload{
+    font-size: 50px;
+    color: #CCC;
+}
+
+.product-img-outer{
+    background-color: #eee;
+    width: 200px;
+    height: 250px;
+    margin: 20px 10px;
+}

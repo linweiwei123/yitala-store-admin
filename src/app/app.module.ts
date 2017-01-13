@@ -11,16 +11,22 @@ import {ChartsModule} from "ng2-charts";
 import {SidebarComponent} from "./share/layout/sidebar/sidebar.component";
 import {ProductListComponent} from "./productlist/product-list.component";
 import {ProductEditComponent} from "./productedit/product-edit.component";
-import {ImageUploadModule} from "ng2-imageupload";
+import {UploadService} from "./share/service/upload.service";
+import {NgbModule, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AlertComponent} from "./share/alert/alert.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ProductService} from "./share/service/product.service";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
+        FormsModule,
+        ReactiveFormsModule,
         ShareModule,
+        NgbModule.forRoot(),
         AppRoutingModule,
         ChartsModule,
-        ImageUploadModule
     ],
     declarations: [
         AppComponent,
@@ -29,7 +35,12 @@ import {ImageUploadModule} from "ng2-imageupload";
         ProductListComponent,
         ProductEditComponent
     ],
-    providers:[],
+    providers:[
+        NgbModal,
+        UploadService,
+        ProductService
+    ],
+    entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {
