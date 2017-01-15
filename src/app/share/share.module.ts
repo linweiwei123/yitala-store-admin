@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {HeaderComponent} from "./layout/header/header.component";
 import {AlertComponent} from "./alert/alert.component";
+import {ShowAuthedDirective} from "./directive/show-authed.directive";
 @NgModule({
     imports:[
         CommonModule,
@@ -14,12 +15,14 @@ import {AlertComponent} from "./alert/alert.component";
     ],
     declarations:[
         HeaderComponent,
-        AlertComponent
+        AlertComponent,
+        ShowAuthedDirective
     ],
     providers:[],
     exports:[
         HeaderComponent,
-        AlertComponent
+        AlertComponent,
+        ShowAuthedDirective
     ]
 })
 

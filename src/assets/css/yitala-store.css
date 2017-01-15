@@ -44,6 +44,9 @@
     margin-left: -0.64em;
     margin-left: -0.64em;
 }
+.button-loading{
+    margin-top: 10px;
+}
 
 #loader{
     position: absolute;

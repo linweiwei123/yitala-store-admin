@@ -3820,6 +3820,7 @@ table.focus-on tbody tr.focused td {
 .login-register {
   height: 100%;
   position: fixed;
+  background: url("../images/login-register.jpg") no-repeat center center / cover !important;
 }
 .login-box {
   background: #ffffff;

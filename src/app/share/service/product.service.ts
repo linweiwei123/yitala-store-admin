@@ -3,12 +3,12 @@
  */
 
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import {Http, Headers} from "@angular/http";
 @Injectable()
 export class ProductService{
 
     constructor(
-        private http:Http
+        private http:Http,
     ){}
 
     private handleError(error: any): Promise<any> {
@@ -17,9 +17,20 @@ export class ProductService{
     }
 
     postJson(url:string,params:any){
-        return this.http.post(url, params)
+        let headers = new Headers();
+        headers.append("Content-Type", 'application/json');
+        return this.http.post(url, params,headers)
             .toPromise()
-            .then(response => response)
+            .then((response:any) => response)
+            .catch(this.handleError);
+    }
+
+    getJson(url:string,params?:any){
+        let headers = new Headers();
+        headers.append("Content-Type", 'application/json');
+        return this.http.get(url,params)
+            .toPromise()
+            .then((response:any) => response)
             .catch(this.handleError);
     }
 }

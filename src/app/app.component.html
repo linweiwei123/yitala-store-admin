@@ -1,10 +1,11 @@
 <div id="wrapper">
-    <layout-header></layout-header>
-    <layout-sidebar></layout-sidebar>
-    <div id="page-wrapper">
+    <layout-header *showAuthed="true"></layout-header>
+    <layout-sidebar *showAuthed="true"></layout-sidebar>
+    <div id="page-wrapper" [class.single]="!isSignOn">
         <div class="container-fluid">
             <router-outlet></router-outlet>
         </div>
-        <footer class="footer text-center"> © 2009－2018  WeiWei网络科技有限公司版权所有 </footer>
+
+        <footer class="footer text-center" *showAuthed="true"> © 2009－2018  WeiWei网络科技有限公司版权所有 </footer>
     </div>
 </div>

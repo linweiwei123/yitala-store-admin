@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import {HttpModule, BaseRequestOptions} from '@angular/http';
 import { AppComponent } from "./app.component";
 import './rxjs-extensions';
 import '../assets/css/styles.css';
@@ -12,33 +12,45 @@ import {SidebarComponent} from "./share/layout/sidebar/sidebar.component";
 import {ProductListComponent} from "./productlist/product-list.component";
 import {ProductEditComponent} from "./productedit/product-edit.component";
 import {UploadService} from "./share/service/upload.service";
-import {NgbModule, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AlertComponent} from "./share/alert/alert.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProductService} from "./share/service/product.service";
+import {AuthGuard} from "./share/guard/auth-guard.component";
+import {AuthenticationService} from "./share/service/authentication.service";
+import {LoginComponent} from "./login/login.component";
+import {MockBackend} from "@angular/http/testing";
+import {FakeBackendProvider} from "./helpers/fake-backend";
+import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
 
 @NgModule({
     imports: [
+        NgbModule.forRoot(),
         BrowserModule,
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        ShareModule,
-        NgbModule.forRoot(),
         AppRoutingModule,
         ChartsModule,
+        ShareModule
     ],
     declarations: [
         AppComponent,
         SidebarComponent,
+        LoginComponent,
         DashboardComponent,
         ProductListComponent,
         ProductEditComponent
     ],
     providers:[
-        NgbModal,
+        AuthGuard,
+        AuthenticationService,
+        NoAuthedGuard,
         UploadService,
-        ProductService
+        ProductService,
+        FakeBackendProvider,
+        MockBackend,
+        BaseRequestOptions
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

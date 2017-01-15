@@ -1,0 +1,34 @@
+<section id="wrapper" class="login-register">
+    <div class="login-box login-sidebar">
+        <div class="white-box" style="margin-top: 100px;">
+            <form class="form-horizontal form-material" [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+                <a href="javascript:void(0)" class="text-center db">
+                    <img src="../../assets/images/logo.jpg" alt="Home">
+                    <br><img src="../../assets/images/logo-text.png" alt="Home">
+                </a>
+                <div class="form-group m-t-40">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" [formControl]="loginForm.controls['username']" placeholder="账号"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" [formControl]="loginForm.controls['password']" placeholder="密码"> </div>
+                </div>
+                <div class="form-group text-center m-t-40">
+                    <div class="col-xs-12">
+                        <button [disabled]="loginForm.invalid || loading" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">登陆</button>
+                        <div class="button-loading" *ngIf="loading">
+                         <i class="fa fa-spinner fa-spin fa-3x"></i>
+                        </div>
+                        <div class="m-t-10"><span class="text-danger">{{error}}</span></div>
+                    </div>
+                </div>
+                <div class="form-group m-b-0">
+                    <div class="col-sm-12 text-center">
+                        <p>Don't have an account? <a href="register2.html" class="text-primary m-l-5"><b>Sign Up</b></a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
