@@ -64,10 +64,7 @@ var ProductEditComponent = (function () {
         console.log(form);
         this.productService.postJson("api/product", form)
             .then(function (res) {
-            if (res.errorCode) {
-                _this.openModel(res.message);
-            }
-            else {
+            if (res["_body"] == "success") {
                 _this.openModel("保存成功");
                 //清空内容并重新初始化
                 _this.productForm = _this.fb.group({
@@ -84,6 +81,10 @@ var ProductEditComponent = (function () {
                 });
                 _this.productImages = [];
                 _this.fileInput.nativeElement.value = "";
+            }
+            else {
+                var responseBody = JSON.parse(res["_body"]);
+                _this.openModel(responseBody.message);
             }
         });
     };

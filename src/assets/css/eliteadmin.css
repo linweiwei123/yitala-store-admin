@@ -1481,7 +1481,7 @@ table.dataTable thead .sorting:after {
 }
 .white-box {
   background: #ffffff;
-  padding: 25px;
+  padding: 10px;
   margin-bottom: 15px;
 }
 .white-box .box-title {
@@ -5035,7 +5035,7 @@ ul.list-icons li i {
   position: relative;
 }
 .product-img img {
-  max-width: 200px;
+  max-width: 100%;
 }
 .product-img .pro-img-overlay {
   position: absolute;

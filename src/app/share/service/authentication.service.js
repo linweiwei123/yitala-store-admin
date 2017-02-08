@@ -26,12 +26,16 @@ var AuthenticationService = (function () {
     AuthenticationService.prototype.login = function (username, password) {
         var _this = this;
         var param = { username: username, password: password };
-        return this.http.post('api/authenticate', JSON.stringify(param))
+        return this.http.post('api/authenticate', param)
             .map(function (response) {
             //如果有token返回，则认证成功
-            var token = response.json() && response.json().user && response.json().user.token;
+            console.log(response);
+            var responseBody = response["_body"];
+            var token = JSON.parse(responseBody).token;
             if (token) {
-                _this.setAuth(response.json().user);
+                var user = new user_model_1.User;
+                user.token = token;
+                _this.setAuth(user);
                 return true;
             }
             else {
@@ -61,6 +65,11 @@ var AuthenticationService = (function () {
         this.currentUserSubject.next(new user_model_1.User());
         this.isAuthenticatedSubject.next(false);
         window.localStorage.removeItem('currentUser');
+    };
+    AuthenticationService.prototype.getAuthorizationToken = function () {
+        var currentUser = window.localStorage.getItem('currentUser');
+        var user = JSON.parse(currentUser);
+        return user.token;
     };
     AuthenticationService = __decorate([
         core_1.Injectable(), 

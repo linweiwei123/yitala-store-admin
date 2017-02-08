@@ -29,8 +29,6 @@ var product_service_1 = require("./share/service/product.service");
 var auth_guard_component_1 = require("./share/guard/auth-guard.component");
 var authentication_service_1 = require("./share/service/authentication.service");
 var login_component_1 = require("./login/login.component");
-var testing_1 = require("@angular/http/testing");
-var fake_backend_1 = require("./helpers/fake-backend");
 var no_authed_guard_component_1 = require("./share/guard/no-authed-guard.component");
 var AppModule = (function () {
     function AppModule() {
@@ -60,10 +58,7 @@ var AppModule = (function () {
                 authentication_service_1.AuthenticationService,
                 no_authed_guard_component_1.NoAuthedGuard,
                 upload_service_1.UploadService,
-                product_service_1.ProductService,
-                fake_backend_1.FakeBackendProvider,
-                testing_1.MockBackend,
-                http_1.BaseRequestOptions
+                product_service_1.ProductService
             ],
             entryComponents: [alert_component_1.AlertComponent],
             bootstrap: [app_component_1.AppComponent]

@@ -22,12 +22,16 @@ export class AuthenticationService{
 
     login(username:string,password:string):Observable<boolean>{
         let param = {username:username,password:password};
-        return this.http.post('api/authenticate',JSON.stringify(param))
+        return this.http.post('api/authenticate',param)
                 .map((response:Response)=>{
                     //如果有token返回，则认证成功
-                    let token = response.json() && response.json().user && response.json().user.token;
+                    console.log(response);
+                    let responseBody = response["_body"];
+                    let token = JSON.parse(responseBody).token;
                     if(token){
-                        this.setAuth(response.json().user);
+                        let user = new User;
+                        user.token = token;
+                        this.setAuth(user);
                         return true;
                     }
                     else {
@@ -62,5 +66,11 @@ export class AuthenticationService{
         this.currentUserSubject.next(new User());
         this.isAuthenticatedSubject.next(false);
         window.localStorage.removeItem('currentUser');
+    }
+
+    getAuthorizationToken(){
+        let currentUser = window.localStorage.getItem('currentUser');
+        let user = JSON.parse(currentUser);
+        return user.token;
     }
 }

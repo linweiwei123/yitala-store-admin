@@ -4,15 +4,18 @@
 
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
+import {AuthenticationService} from "./authentication.service";
 @Injectable()
 export class UploadService{
 
     constructor(
-        private http:Http
+        private http:Http,
+        private authenticationServie:AuthenticationService
     ){}
 
     uploadSingleFile(file:any){
         let headers = new Headers();
+        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
         let formData:FormData = new FormData();
         formData.append('file', file, file.name);
 

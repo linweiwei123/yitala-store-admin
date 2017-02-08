@@ -47,10 +47,7 @@ import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
         AuthenticationService,
         NoAuthedGuard,
         UploadService,
-        ProductService,
-        FakeBackendProvider,
-        MockBackend,
-        BaseRequestOptions
+        ProductService
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

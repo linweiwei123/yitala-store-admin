@@ -13,33 +13,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var authentication_service_1 = require("./authentication.service");
 var ProductService = (function () {
-    function ProductService(http) {
+    function ProductService(http, authenticationServie) {
         this.http = http;
+        this.authenticationServie = authenticationServie;
     }
     ProductService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     };
     ProductService.prototype.postJson = function (url, params) {
-        var headers = new http_1.Headers();
-        headers.append("Content-Type", 'application/json');
-        return this.http.post(url, params, headers)
+        var options = {};
+        options.headers = this.setHeaders();
+        return this.http.post(url, params, options)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
     ProductService.prototype.getJson = function (url, params) {
-        var headers = new http_1.Headers();
-        headers.append("Content-Type", 'application/json');
-        return this.http.get(url, params)
+        var options = {};
+        options.headers = this.setHeaders();
+        options.body = params;
+        return this.http.get(url, options)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
+    ProductService.prototype.setHeaders = function () {
+        var headers = new http_1.Headers();
+        headers.append("Content-Type", 'application/json');
+        headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
+        return headers;
+    };
     ProductService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService])
     ], ProductService);
     return ProductService;
 }());

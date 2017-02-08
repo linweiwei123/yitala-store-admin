@@ -13,13 +13,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var authentication_service_1 = require("./authentication.service");
 var UploadService = (function () {
-    function UploadService(http) {
+    function UploadService(http, authenticationServie) {
         this.http = http;
+        this.authenticationServie = authenticationServie;
     }
     UploadService.prototype.uploadSingleFile = function (file) {
         var _this = this;
         var headers = new http_1.Headers();
+        headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
         var formData = new FormData();
         formData.append('file', file, file.name);
         return new Promise(function (resolve, reject) {
@@ -34,7 +37,7 @@ var UploadService = (function () {
     };
     UploadService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, authentication_service_1.AuthenticationService])
     ], UploadService);
     return UploadService;
 }());

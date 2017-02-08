@@ -2,7 +2,7 @@
  * Created by Linweiwei on 2017/1/12.
  */
 import {Component, ViewChild} from "@angular/core";
-import {Headers, RequestOptions, Http} from "@angular/http";
+import {Headers, RequestOptions, Http, Response} from "@angular/http";
 import {UploadService} from "../share/service/upload.service";
 import {ProductImage} from "./ProductImage";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -68,11 +68,8 @@ export class ProductEditComponent{
           form["images"] = this.productImages;
           console.log(form);
           this.productService.postJson("api/product",form)
-              .then((res:any)=>{
-                  if(res.errorCode){
-                      this.openModel(res.message);
-                  }
-                  else{
+              .then((res:Response)=>{
+                  if(res["_body"] == "success"){
                       this.openModel("保存成功");
                       //清空内容并重新初始化
                       this.productForm = this.fb.group({
@@ -89,6 +86,10 @@ export class ProductEditComponent{
                       })
                       this.productImages = [];
                       this.fileInput.nativeElement.value="";
+                  }
+                  else{
+                      let responseBody = JSON.parse(res["_body"]);
+                      this.openModel(responseBody.message);
                   }
         });
     }
