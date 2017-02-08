@@ -37,6 +37,16 @@ export class ProductService{
             .catch(this.handleError);
     }
 
+    deleteJson(url:string,params?:any){
+        let options:RequestOptionsArgs = {};
+        options.headers = this.setHeaders();
+        options.body = params;
+        return this.http.delete(url,options)
+            .toPromise()
+            .then((response:any) => response)
+            .catch(this.handleError);
+    }
+
     private setHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/json');

@@ -68,6 +68,13 @@
     font-size: 18px;
 }
 
+.pagination-size-select{
+    padding: 24px;
+}
+.pagination-size-select .total{
+    margin-right: 15px;
+    margin-left: -24px;
+}
 /* @pages */
 
 /* @cover */

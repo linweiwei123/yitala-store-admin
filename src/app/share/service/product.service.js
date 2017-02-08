@@ -40,6 +40,15 @@ var ProductService = (function () {
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
+    ProductService.prototype.deleteJson = function (url, params) {
+        var options = {};
+        options.headers = this.setHeaders();
+        options.body = params;
+        return this.http.delete(url, options)
+            .toPromise()
+            .then(function (response) { return response; })
+            .catch(this.handleError);
+    };
     ProductService.prototype.setHeaders = function () {
         var headers = new http_1.Headers();
         headers.append("Content-Type", 'application/json');

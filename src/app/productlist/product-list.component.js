@@ -20,21 +20,24 @@ var ProductListComponent = (function () {
         this.productService = productService;
         this.modalService = modalService;
         this.products = [];
+        this.page = 1;
+        this.size = 12;
     }
     ProductListComponent.prototype.ngOnInit = function () {
         this.getProducts();
     };
     ProductListComponent.prototype.getProducts = function () {
         var _this = this;
-        this.productService.getJson("api/product")
+        this.productService.getJson("api/product/page?page=" + (this.page - 1) + "&size=" + this.size)
             .then(function (response) {
-            console.log(response._body);
-            var databack = JSON.parse(response._body);
-            for (var _i = 0, databack_1 = databack; _i < databack_1.length; _i++) {
-                var item = databack_1[_i];
+            console.log(response);
+            var databack = JSON.parse(response["_body"]);
+            for (var _i = 0, _a = databack.content; _i < _a.length; _i++) {
+                var item = _a[_i];
                 item.images = item.images.substring(0, item.images.indexOf(','));
             }
-            _this.products = databack;
+            _this.products = databack.content;
+            _this.totalElements = databack.totalElements;
         })
             .catch(function (error) {
             console.log(error);
@@ -44,6 +47,24 @@ var ProductListComponent = (function () {
     ProductListComponent.prototype.openModel = function (msg) {
         var modalRef = this.modalService.open(alert_component_1.AlertComponent, { backdrop: "static", keyboard: false, size: "sm" });
         modalRef.componentInstance.msg = "" + msg;
+    };
+    ProductListComponent.prototype.delete = function (product) {
+        var _this = this;
+        this.productService.deleteJson("api/product/" + product.productId)
+            .then(function (res) {
+            if (res["_body"] == "success") {
+                _this.openModel("删除成功");
+                _this.getProducts();
+            }
+            else {
+                var responseBody = JSON.parse(res["_body"]);
+                _this.openModel(responseBody.message);
+            }
+        })
+            .catch(function (error) {
+            console.log(error);
+            _this.openModel("系统错误，请联系管理员");
+        });
     };
     ProductListComponent = __decorate([
         core_1.Component({

@@ -4,6 +4,7 @@
 
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
+import {AuthenticationService} from "../../service/authentication.service";
 @Component({
     selector:"layout-header",
     templateUrl:"header.component.html"
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit{
 
     constructor(
         private route: ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private authenticationService:AuthenticationService
     ){
     }
 
@@ -31,5 +33,10 @@ export class HeaderComponent implements OnInit{
                 //console.log(obj);
                 this.currentRoute = obj["name"];
             })
+    }
+
+    logout():void{
+        this.authenticationService.logout();
+        this.router.navigate(["/login"]);
     }
 }

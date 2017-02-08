@@ -13,10 +13,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
+var authentication_service_1 = require("../../service/authentication.service");
 var HeaderComponent = (function () {
-    function HeaderComponent(route, router) {
+    function HeaderComponent(route, router, authenticationService) {
         this.route = route;
         this.router = router;
+        this.authenticationService = authenticationService;
     }
     HeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -32,12 +34,16 @@ var HeaderComponent = (function () {
             _this.currentRoute = obj["name"];
         });
     };
+    HeaderComponent.prototype.logout = function () {
+        this.authenticationService.logout();
+        this.router.navigate(["/login"]);
+    };
     HeaderComponent = __decorate([
         core_1.Component({
             selector: "layout-header",
             templateUrl: "header.component.html"
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, authentication_service_1.AuthenticationService])
     ], HeaderComponent);
     return HeaderComponent;
 }());
