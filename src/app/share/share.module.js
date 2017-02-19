@@ -17,6 +17,7 @@ var forms_1 = require("@angular/forms");
 var header_component_1 = require("./layout/header/header.component");
 var alert_component_1 = require("./alert/alert.component");
 var show_authed_directive_1 = require("./directive/show-authed.directive");
+var global_loading_component_1 = require("./loading/global-loading.component");
 var ShareModule = (function () {
     function ShareModule() {
     }
@@ -29,14 +30,17 @@ var ShareModule = (function () {
             declarations: [
                 header_component_1.HeaderComponent,
                 alert_component_1.AlertComponent,
+                global_loading_component_1.GlobalLoadingComponent,
                 show_authed_directive_1.ShowAuthedDirective
             ],
             providers: [],
             exports: [
                 header_component_1.HeaderComponent,
                 alert_component_1.AlertComponent,
+                global_loading_component_1.GlobalLoadingComponent,
                 show_authed_directive_1.ShowAuthedDirective
-            ]
+            ],
+            schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA]
         }), 
         __metadata('design:paramtypes', [])
     ], ShareModule);

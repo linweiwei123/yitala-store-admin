@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-info">
+        <div class="panel panel-info" [ngClass]="{'block-refresh': updateLoading}">
             <div class="panel-heading"> 修改商品</div>
-            <div class="panel-wrapper collapse in" aria-expanded="true">
+            <div class="panel-wrapper collapse in" >
                 <div class="panel-body">
                     <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" autocomplete="off">
                         <div class="form-body">
@@ -153,3 +153,5 @@
 </div>
 
 <template ngbModalContainer></template>
+
+<global-loading [ngClass]="{hide:!loading}"></global-loading>

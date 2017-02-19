@@ -10,6 +10,7 @@ import {AlertComponent} from "../../share/alert/alert.component";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {ProductService} from "../../share/service/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {GlobalLoadingComponent} from "../../share/loading/global-loading.component";
 
 @Component({
     selector:'product-update',
@@ -17,7 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
     styleUrls:['product-update.component.css']
 })
 
-export class ProductUpdateComponent implements OnInit{
+export class ProductUpdateComponent extends GlobalLoadingComponent implements OnInit{
 
     productForm:FormGroup;
     productImages:Array<ProductImage> = [];
@@ -25,6 +26,7 @@ export class ProductUpdateComponent implements OnInit{
     fileInput:any;
     category:string = "all";
     productId:string;
+    updateLoading:boolean = false;
 
     constructor(
         private http: Http,
@@ -35,6 +37,7 @@ export class ProductUpdateComponent implements OnInit{
         private activedRoute:ActivatedRoute,
         private router:Router
     ){
+        super();
         this.http = http;
         this.productForm = fb.group({
             'name':['',Validators.required],
@@ -56,23 +59,26 @@ export class ProductUpdateComponent implements OnInit{
     ngOnInit(): void {
         if(this.productId){
             //查询loading
+            this.updateLoading = true;
             this.productService.getJson(`api/product/${this.productId}`)
                 .then((response:Response)=>{
-                 let data = JSON.parse(response["_body"]);
-                 for(let item in data){
-                     if(this.productForm.controls[item]){
-                         this.productForm.controls[item].setValue(data[item]);
+                    this.updateLoading = false;
+                     let data = JSON.parse(response["_body"]);
+                     for(let item in data){
+                         if(this.productForm.controls[item]){
+                             this.productForm.controls[item].setValue(data[item]);
+                         }
                      }
-                 }
-                 let imageUrlsStr = data.images;
-                 let imageUrlArr = imageUrlsStr.split(",");
-                 for(let i=0;i<imageUrlArr.length-1;i++){
-                     let productImage = new ProductImage();
-                     productImage.fileUrl = imageUrlArr[i];
-                     this.productImages.push(productImage);
-                 }
-            })
+                     let imageUrlsStr = data.images;
+                     let imageUrlArr = imageUrlsStr.split(",");
+                     for(let i=0;i<imageUrlArr.length-1;i++){
+                         let productImage = new ProductImage();
+                         productImage.fileUrl = imageUrlArr[i];
+                         this.productImages.push(productImage);
+                     }
+                })
                 .catch((error:any)=>{
+                    this.updateLoading =false;
                     console.log(error);
                     this.openModel("系统错误，请联系管理员");
                 })
@@ -103,9 +109,10 @@ export class ProductUpdateComponent implements OnInit{
           if(this.productId){
               form["productId"] = this.productId;
           }
-          console.log(form);
+          this.showLoading();
           this.productService.postJson("api/product",form)
               .then((res:Response)=>{
+                  this.cancelLoading();
                   if(res["_body"] == "success"){
                       this.openModel("保存成功");
                       this.backToList();

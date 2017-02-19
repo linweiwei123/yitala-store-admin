@@ -10,6 +10,7 @@ import {Product} from "../product";
 import {Response} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Router, ActivatedRoute} from "@angular/router";
+import {GlobalLoadingComponent} from "../../share/loading/global-loading.component";
 
 @Component({
     selector:'product-list',
@@ -17,7 +18,7 @@ import {Router, ActivatedRoute} from "@angular/router";
     styleUrls:['product-list.component.css']
 })
 
-export class ProductListComponent implements OnInit{
+export class ProductListComponent extends GlobalLoadingComponent implements OnInit{
 
     searchForm:FormGroup;
     products:Array<Product>=[];
@@ -32,6 +33,7 @@ export class ProductListComponent implements OnInit{
         private router:Router,
         private activatedRoute:ActivatedRoute
     ){
+        super();
         this.searchForm = fb.group({
             'category':['all'],
             'name':['']
@@ -55,9 +57,11 @@ export class ProductListComponent implements OnInit{
         else {
             url += "&type=all";
         }
+        this.showLoading();
+        console.log(this.loading);
         this.productService.getJson(url)
             .then((response:Response)=>{
-                console.log(response);
+                this.cancelLoading();
                 let databack = JSON.parse(response["_body"]);
                 for(let item of databack.content){
                     item.images = item.images.substring(0,item.images.indexOf(','));
@@ -66,6 +70,7 @@ export class ProductListComponent implements OnInit{
                 this.totalElements  = databack.totalElements;
             })
             .catch((error:any)=>{
+                this.cancelLoading();
                 console.log(error);
                 this.openModel("系统错误，请联系管理员");
             })

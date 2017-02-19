@@ -2,11 +2,6 @@
  * Created by Linweiwei on 2017/1/12.
  */
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17,21 +12,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var product_service_1 = require("../../share/service/product.service");
-var alert_component_1 = require("../../share/alert/alert.component");
+var product_service_1 = require("../share/service/product.service");
+var alert_component_1 = require("../share/alert/alert.component");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
-var global_loading_component_1 = require("../../share/loading/global-loading.component");
-var ProductListComponent = (function (_super) {
-    __extends(ProductListComponent, _super);
-    function ProductListComponent(productService, modalService, fb, router, activatedRoute) {
-        _super.call(this);
+var ProductListComponent = (function () {
+    function ProductListComponent(productService, modalService, fb, router) {
         this.productService = productService;
         this.modalService = modalService;
         this.fb = fb;
         this.router = router;
-        this.activatedRoute = activatedRoute;
         this.products = [];
         this.page = 1;
         this.size = 12;
@@ -57,11 +48,9 @@ var ProductListComponent = (function (_super) {
         else {
             url += "&type=all";
         }
-        this.showLoading();
-        console.log(this.loading);
         this.productService.getJson(url)
             .then(function (response) {
-            _this.cancelLoading();
+            console.log(response);
             var databack = JSON.parse(response["_body"]);
             for (var _i = 0, _a = databack.content; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -71,7 +60,6 @@ var ProductListComponent = (function (_super) {
             _this.totalElements = databack.totalElements;
         })
             .catch(function (error) {
-            _this.cancelLoading();
             console.log(error);
             _this.openModel("系统错误，请联系管理员");
         });
@@ -108,9 +96,7 @@ var ProductListComponent = (function (_super) {
     };
     ProductListComponent.prototype.edit = function (product) {
         console.log(product);
-        //因为本级是第二级的导航，所以要获取上级的url path
-        var parentPath = this.activatedRoute.parent.routeConfig.path;
-        this.router.navigate([(parentPath + "/update"), { id: product.productId }]);
+        this.router.navigate(['/productUpdate', { id: product.productId }]);
     };
     ProductListComponent = __decorate([
         core_1.Component({
@@ -118,9 +104,9 @@ var ProductListComponent = (function (_super) {
             templateUrl: 'product-list.component.html',
             styleUrls: ['product-list.component.css']
         }), 
-        __metadata('design:paramtypes', [product_service_1.ProductService, ng_bootstrap_1.NgbModal, forms_1.FormBuilder, router_1.Router, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [product_service_1.ProductService, ng_bootstrap_1.NgbModal, forms_1.FormBuilder, router_1.Router])
     ], ProductListComponent);
     return ProductListComponent;
-}(global_loading_component_1.GlobalLoadingComponent));
+}());
 exports.ProductListComponent = ProductListComponent;
 //# sourceMappingURL=product-list.component.js.map

@@ -1,9 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,19 +13,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var upload_service_1 = require("../../share/service/upload.service");
-var ProductImage_1 = require("../../productedit/ProductImage");
+var upload_service_1 = require("../share/service/upload.service");
+var ProductImage_1 = require("../productedit/ProductImage");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
-var alert_component_1 = require("../../share/alert/alert.component");
+var alert_component_1 = require("../share/alert/alert.component");
 var forms_1 = require("@angular/forms");
-var product_service_1 = require("../../share/service/product.service");
+var product_service_1 = require("../share/service/product.service");
 var router_1 = require("@angular/router");
-var global_loading_component_1 = require("../../share/loading/global-loading.component");
-var ProductUpdateComponent = (function (_super) {
-    __extends(ProductUpdateComponent, _super);
+var ProductUpdateComponent = (function () {
     function ProductUpdateComponent(http, uploadService, modalService, fb, productService, activedRoute, router) {
         var _this = this;
-        _super.call(this);
         this.http = http;
         this.uploadService = uploadService;
         this.modalService = modalService;
@@ -40,7 +32,6 @@ var ProductUpdateComponent = (function (_super) {
         this.router = router;
         this.productImages = [];
         this.category = "all";
-        this.updateLoading = false;
         this.http = http;
         this.productForm = fb.group({
             'name': ['', forms_1.Validators.required],
@@ -62,10 +53,8 @@ var ProductUpdateComponent = (function (_super) {
         var _this = this;
         if (this.productId) {
             //查询loading
-            this.updateLoading = true;
             this.productService.getJson("api/product/" + this.productId)
                 .then(function (response) {
-                _this.updateLoading = false;
                 var data = JSON.parse(response["_body"]);
                 for (var item in data) {
                     if (_this.productForm.controls[item]) {
@@ -81,7 +70,6 @@ var ProductUpdateComponent = (function (_super) {
                 }
             })
                 .catch(function (error) {
-                _this.updateLoading = false;
                 console.log(error);
                 _this.openModel("系统错误，请联系管理员");
             });
@@ -111,10 +99,9 @@ var ProductUpdateComponent = (function (_super) {
         if (this.productId) {
             form["productId"] = this.productId;
         }
-        this.showLoading();
+        console.log(form);
         this.productService.postJson("api/product", form)
             .then(function (res) {
-            _this.cancelLoading();
             if (res["_body"] == "success") {
                 _this.openModel("保存成功");
                 _this.backToList();
@@ -145,6 +132,6 @@ var ProductUpdateComponent = (function (_super) {
         __metadata('design:paramtypes', [http_1.Http, upload_service_1.UploadService, ng_bootstrap_1.NgbModal, forms_1.FormBuilder, product_service_1.ProductService, router_1.ActivatedRoute, router_1.Router])
     ], ProductUpdateComponent);
     return ProductUpdateComponent;
-}(global_loading_component_1.GlobalLoadingComponent));
+}());
 exports.ProductUpdateComponent = ProductUpdateComponent;
 //# sourceMappingURL=product-update.component.js.map

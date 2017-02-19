@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import {HttpModule, BaseRequestOptions} from '@angular/http';
+import {HttpModule} from '@angular/http';
 import { AppComponent } from "./app.component";
 import './rxjs-extensions';
 import '../assets/css/styles.css';
@@ -21,8 +21,8 @@ import {LoginComponent} from "./login/login.component";
 import {MockBackend} from "@angular/http/testing";
 import {FakeBackendProvider} from "./helpers/fake-backend";
 import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
-import {ProductUpdateComponent} from "./product/update/product-update.component";
 import {ProductModule} from "./product/product.module";
+import {GlobalLoadingComponent} from "./share/loading/global-loading.component";
 
 @NgModule({
     imports: [

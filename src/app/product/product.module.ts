@@ -2,7 +2,7 @@
  * Created by yitala on 2017/2/19.
  */
 
-import {NgModule} from "@angular/core";
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {ProductListComponent} from "./list/product-list.component";
 import {AuthGuard} from "../share/guard/auth-guard.component";
@@ -11,6 +11,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {ShareModule} from "../share/share.module";
 
 const productRoutes:Routes = [
     {
@@ -34,12 +35,14 @@ const productRoutes:Routes = [
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
+        ShareModule,
         RouterModule.forChild(productRoutes)
     ],
     declarations:[
         ProductListComponent,
         ProductUpdateComponent
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class ProductModule{

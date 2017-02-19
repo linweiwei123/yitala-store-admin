@@ -32,6 +32,171 @@
 
 
 /* 通用 */
+
+@-webkit-keyframes move1 {
+    0% {
+        -webkit-transform: translateX(0) scale(1);
+    }
+
+    50% {
+        -webkit-transform: translateX(105px) scale(1);
+    }
+
+    75% {
+        -webkit-transform: scale(1.25);
+    }
+
+    100% {
+        z-index: 1;
+        -webkit-transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes move1 {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+
+    50% {
+        transform: translateX(105px) scale(1);
+    }
+
+    75% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        z-index: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@-webkit-keyframes move2 {
+    0% {
+        -webkit-transform: translateX(0);
+    }
+
+    25% {
+        -webkit-transform: scale(1.25);
+    }
+
+    50% {
+        -webkit-transform: translateX(-105px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes move2 {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: scale(1.25);
+    }
+
+    50% {
+        transform: translateX(-105px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+#loader-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.85);
+}
+
+.loader-content {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    margin-top: -100px;
+}
+
+.loader-content .circle1 {
+    position: relative;
+    display: inline-block;
+    background: #fb9678;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    -webkit-animation: move1 1.5s ease-in-out infinite;
+    animation: move1 1.5s ease-in-out infinite;
+}
+
+.loader-content .circle2 {
+    position: relative;
+    display: inline-block;
+    background: #4F5467;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    -webkit-animation: move2 1.5s ease-in-out infinite;
+    animation: move2 1.5s ease-in-out infinite;
+}
+
+.loader-content .title {
+    font-family: 'black',sans-serif,Arial;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    top: 120%;
+    font-size: 30px;
+    line-height: 30px;
+    color: #232c3b;
+}
+
+
+.block-refresh {
+    position: relative
+}
+
+
+.block-refresh:before {
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    content: " ";
+    background-color: rgba(255,255,255,0.85);
+}
+
+.block-refresh:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    color: #fb9678;
+    font-size: 60px;
+    text-align: center;
+    font-family: FontAwesome;
+    z-index: 5;
+    content: "\f110";
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear
+}
+
+
 .yitala-loading{
     position: relative;
     min-height: 50px;

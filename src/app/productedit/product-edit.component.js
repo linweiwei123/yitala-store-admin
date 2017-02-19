@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,8 +23,11 @@ var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var alert_component_1 = require("../share/alert/alert.component");
 var forms_1 = require("@angular/forms");
 var product_service_1 = require("../share/service/product.service");
-var ProductEditComponent = (function () {
+var global_loading_component_1 = require("../share/loading/global-loading.component");
+var ProductEditComponent = (function (_super) {
+    __extends(ProductEditComponent, _super);
     function ProductEditComponent(http, uploadService, modalService, fb, productService) {
+        _super.call(this);
         this.http = http;
         this.uploadService = uploadService;
         this.modalService = modalService;
@@ -61,9 +69,10 @@ var ProductEditComponent = (function () {
     ProductEditComponent.prototype.onSubmit = function (form) {
         var _this = this;
         form["images"] = this.productImages;
-        console.log(form);
+        this.showLoading();
         this.productService.postJson("api/product", form)
             .then(function (res) {
+            _this.cancelLoading();
             if (res["_body"] == "success") {
                 _this.openModel("保存成功");
                 //清空内容并重新初始化
@@ -105,6 +114,6 @@ var ProductEditComponent = (function () {
         __metadata('design:paramtypes', [http_1.Http, upload_service_1.UploadService, ng_bootstrap_1.NgbModal, forms_1.FormBuilder, product_service_1.ProductService])
     ], ProductEditComponent);
     return ProductEditComponent;
-}());
+}(global_loading_component_1.GlobalLoadingComponent));
 exports.ProductEditComponent = ProductEditComponent;
 //# sourceMappingURL=product-edit.component.js.map

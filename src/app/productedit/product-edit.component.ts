@@ -9,6 +9,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AlertComponent} from "../share/alert/alert.component";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {ProductService} from "../share/service/product.service";
+import {GlobalLoadingComponent} from "../share/loading/global-loading.component";
 
 @Component({
     selector:'product-edit',
@@ -16,7 +17,7 @@ import {ProductService} from "../share/service/product.service";
     styleUrls:['product-edit.component.css']
 })
 
-export class ProductEditComponent{
+export class ProductEditComponent extends GlobalLoadingComponent{
 
     productForm:FormGroup;
     productImages:Array<ProductImage> = [];
@@ -30,6 +31,7 @@ export class ProductEditComponent{
         private fb:FormBuilder,
         private productService:ProductService
     ){
+        super();
         this.http = http;
         this.productForm = fb.group({
             'name':['',Validators.required],
@@ -66,9 +68,10 @@ export class ProductEditComponent{
 
     onSubmit(form:any):void{
           form["images"] = this.productImages;
-          console.log(form);
+          this.showLoading();
           this.productService.postJson("api/product",form)
               .then((res:Response)=>{
+                  this.cancelLoading();
                   if(res["_body"] == "success"){
                       this.openModel("保存成功");
                       //清空内容并重新初始化
