@@ -3,8 +3,8 @@
  */
 
 export class ProductImage{
-    private imgId:string
-    private date:number
-    private filename:string
-    private fileUrl:string
+    imgId:string
+    date:number
+    filename:string
+    fileUrl:string
 }

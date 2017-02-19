@@ -43,7 +43,7 @@ var LoginComponent = (function () {
                 _this.loading = false;
             }
         }, function (error) {
-            _this.error = error;
+            _this.error = "账号或者密码错误";
             _this.loading = false;
         });
     };

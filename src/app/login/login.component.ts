@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit{
                     }
                 },
                 error=>{
-                    this.error = error;
+                    this.error = "账号或者密码错误";
                     this.loading = false;
                 }
             );

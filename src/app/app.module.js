@@ -19,7 +19,6 @@ var app_routing_module_1 = require("./app-routing.module");
 var dashboard_component_1 = require("./dashboard/dashboard.component");
 var ng2_charts_1 = require("ng2-charts");
 var sidebar_component_1 = require("./share/layout/sidebar/sidebar.component");
-var product_list_component_1 = require("./productlist/product-list.component");
 var product_edit_component_1 = require("./productedit/product-edit.component");
 var upload_service_1 = require("./share/service/upload.service");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
@@ -30,6 +29,7 @@ var auth_guard_component_1 = require("./share/guard/auth-guard.component");
 var authentication_service_1 = require("./share/service/authentication.service");
 var login_component_1 = require("./login/login.component");
 var no_authed_guard_component_1 = require("./share/guard/no-authed-guard.component");
+var product_module_1 = require("./product/product.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -43,14 +43,14 @@ var AppModule = (function () {
                 forms_1.ReactiveFormsModule,
                 app_routing_module_1.AppRoutingModule,
                 ng2_charts_1.ChartsModule,
-                share_module_1.ShareModule
+                share_module_1.ShareModule,
+                product_module_1.ProductModule
             ],
             declarations: [
                 app_component_1.AppComponent,
                 sidebar_component_1.SidebarComponent,
                 login_component_1.LoginComponent,
                 dashboard_component_1.DashboardComponent,
-                product_list_component_1.ProductListComponent,
                 product_edit_component_1.ProductEditComponent
             ],
             providers: [

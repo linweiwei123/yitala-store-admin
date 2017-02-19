@@ -1,0 +1,86 @@
+<div class="form-horizontal">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)" autocomplete="off">
+        <div class="col-sm-5 col-md-5">
+            <div class="form-group">
+                <label class="col-sm-3 col-md-3 control-label" title="商品类别"><div class="text-overflow-hidden">商品类别</div></label>
+                <div class=" col-sm-9 col-md-9">
+                    <select class="form-control" data-placeholder="请选择一个商品类别" [formControl]="searchForm.controls['category']" >
+                        <option value="all">全部</option>
+                        <option value="watch">手表</option>
+                        <option value="earring">耳钉</option>
+                        <option value="bag">包包</option>
+                        <option value="necklace">项链</option>
+                        <option value="bracelet">手链</option>
+                        <option value="ring">戒子</option>
+                        <option value="brooch">胸针</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <label class="col-sm-3 col-md-3 control-label" title="商品名称">
+                <div class="text-overflow-hidden">商品名称</div>
+            </label>
+            <div class=" col-sm-9 col-md-9">
+                <div class="form-group" role="search">
+                    <div class="input-group" style="width: 100%">
+                        <input type="text" class="form-control" placeholder="请输入要搜索的商品名称" [formControl]="searchForm.controls['name']">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1 col-md-1">
+            <button type="submit" class="btn waves-effect waves-light btn-info" style="line-height: 24px;" >
+                <i class="fa fa-search"></i>搜索
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products">
+        <div class="white-box">
+            <div class="product-img">
+                <img [src]="product.images">
+                <div class="pro-img-overlay">
+                    <a href="javascript:;" class="bg-info" (click)="edit(product)">
+                    <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="javascript:;" class="bg-danger" (click)="delete(product)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="product-text">
+                <span class="pro-price bg-danger">¥{{product.price}}</span>
+                <h3 class="box-title m-b-0">{{product.name}}</h3>
+                <small class="text-muted db">{{product.brand}}</small>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="pull-right">
+        <ngb-pagination [collectionSize]="totalElements" [(page)]="page" [pageSize]="size"
+                        [boundaryLinks]="true" (pageChange)="getProducts()"></ngb-pagination>
+    </div>
+    <div class="pull-left">
+        <div class="pagination-size-select">
+            <label class="total">总数:{{totalElements}}</label>
+            <label class="form-inline">显示
+                <select id="demo-show-entries" class="form-control input-sm" [(ngModel)]="size" (change)="getProducts()">
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                    <option value="48">48</option>
+                </select>
+                个每页 </label>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<template ngbModalContainer></template>

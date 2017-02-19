@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-info">
-            <div class="panel-heading"> 编辑商品</div>
+            <div class="panel-heading"> 修改商品</div>
             <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                     <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" autocomplete="off">
@@ -142,7 +142,8 @@
                             </div>
                         </div>
                         <div class="form-actions m-t-40 text-center">
-                            <button type="submit" [disabled]="productForm.invalid || productImages.length<=0" class="btn btn-success">保存</button>
+                            <button type="submit" [disabled]="productForm.invalid || productImages.length<=0" class="btn btn-success">修改</button>
+                            <button type="button" class="btn btn-default" (click)="backToList()">取消</button>
                         </div>
                     </form>
                 </div>

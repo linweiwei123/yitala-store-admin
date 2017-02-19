@@ -3,11 +3,13 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {ProductService} from "../share/service/product.service";
-import {AlertComponent} from "../share/alert/alert.component";
+import {ProductService} from "../../share/service/product.service";
+import {AlertComponent} from "../../share/alert/alert.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Product} from "./product";
+import {Product} from "../product";
 import {Response} from "@angular/http";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
     selector:'product-list',
@@ -17,6 +19,7 @@ import {Response} from "@angular/http";
 
 export class ProductListComponent implements OnInit{
 
+    searchForm:FormGroup;
     products:Array<Product>=[];
     page:number = 1;
     size:number = 12;
@@ -24,15 +27,35 @@ export class ProductListComponent implements OnInit{
 
     constructor(
         private productService:ProductService,
-        private modalService: NgbModal
-    ){}
-
-    ngOnInit(): void {
-        this.getProducts();
+        private modalService: NgbModal,
+        private fb:FormBuilder,
+        private router:Router,
+        private activatedRoute:ActivatedRoute
+    ){
+        this.searchForm = fb.group({
+            'category':['all'],
+            'name':['']
+        })
     }
 
-    getProducts():void{
-        this.productService.getJson(`api/product/page?page=${this.page-1}&size=${this.size}`)
+    ngOnInit(): void {
+        this.getProducts({"type":"all"});
+    }
+
+    getProducts(param?:any):void{
+        let url =`api/product/page?page=${this.page-1}&size=${this.size}`;
+        if(param){
+            if(param["type"]){
+                url += "&type=" + param["type"];
+            }
+            if(param["name"]){
+                url += "&name=" + param["name"];
+            }
+        }
+        else {
+            url += "&type=all";
+        }
+        this.productService.getJson(url)
             .then((response:Response)=>{
                 console.log(response);
                 let databack = JSON.parse(response["_body"]);
@@ -58,7 +81,7 @@ export class ProductListComponent implements OnInit{
             .then((res:any)=>{
                 if(res["_body"] == "success"){
                     this.openModel("删除成功");
-                    this.getProducts();
+                    this.getProducts({});
                 }
                 else{
                     let responseBody = JSON.parse(res["_body"]);
@@ -69,5 +92,21 @@ export class ProductListComponent implements OnInit{
                 console.log(error);
                 this.openModel("系统错误，请联系管理员");
             })
+    }
+
+    onSubmit(form:any):void{
+        console.log(form);
+        let param ={"type":form.category};
+        if(form.name != ""){
+            param["name"] = form.name;
+        }
+        this.getProducts(param);
+    }
+
+    edit(product:any){
+        console.log(product);
+        //因为本级是第二级的导航，所以要获取上级的url path
+        let parentPath = this.activatedRoute.parent.routeConfig.path;
+        this.router.navigate([`${parentPath}/update`, { id:product.productId}]);
     }
 }

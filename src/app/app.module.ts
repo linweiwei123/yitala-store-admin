@@ -9,7 +9,6 @@ import {AppRoutingModule} from "./app-routing.module";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {ChartsModule} from "ng2-charts";
 import {SidebarComponent} from "./share/layout/sidebar/sidebar.component";
-import {ProductListComponent} from "./productlist/product-list.component";
 import {ProductEditComponent} from "./productedit/product-edit.component";
 import {UploadService} from "./share/service/upload.service";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
@@ -22,6 +21,8 @@ import {LoginComponent} from "./login/login.component";
 import {MockBackend} from "@angular/http/testing";
 import {FakeBackendProvider} from "./helpers/fake-backend";
 import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
+import {ProductUpdateComponent} from "./product/update/product-update.component";
+import {ProductModule} from "./product/product.module";
 
 @NgModule({
     imports: [
@@ -32,14 +33,14 @@ import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
         ReactiveFormsModule,
         AppRoutingModule,
         ChartsModule,
-        ShareModule
+        ShareModule,
+        ProductModule
     ],
     declarations: [
         AppComponent,
         SidebarComponent,
         LoginComponent,
         DashboardComponent,
-        ProductListComponent,
         ProductEditComponent
     ],
     providers:[
