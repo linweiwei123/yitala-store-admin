@@ -25,6 +25,8 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     page:number = 1;
     size:number = 12;
     totalElements:number;
+    confirmStatus:boolean = false;
+    toDeleteProduct:any;
 
     constructor(
         private productService:ProductService,
@@ -58,7 +60,6 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
             url += "&type=all";
         }
         this.showLoading();
-        console.log(this.loading);
         this.productService.getJson(url)
             .then((response:Response)=>{
                 this.cancelLoading();
@@ -82,11 +83,18 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     }
 
     delete(product:any):void{
-        this.productService.deleteJson("api/product/"+product.productId)
+        this.confirmStatus = true;
+        this.toDeleteProduct = product;
+
+    }
+
+    confirm():void{
+        this.productService.deleteJson("api/product/"+this.toDeleteProduct.productId)
             .then((res:any)=>{
+                this.confirmStatus = false;
                 if(res["_body"] == "success"){
-                    this.openModel("删除成功");
-                    this.getProducts({});
+                    //this.openModel("删除成功");
+                    this.getProducts({"type":"all"});
                 }
                 else{
                     let responseBody = JSON.parse(res["_body"]);
@@ -94,13 +102,17 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
                 }
             })
             .catch((error:any)=>{
+                this.confirmStatus = false;
                 console.log(error);
                 this.openModel("系统错误，请联系管理员");
             })
     }
 
+    cancel():void{
+        this.confirmStatus = false;
+    }
+
     onSubmit(form:any):void{
-        console.log(form);
         let param ={"type":form.category};
         if(form.name != ""){
             param["name"] = form.name;
@@ -109,7 +121,6 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     }
 
     edit(product:any){
-        console.log(product);
         //因为本级是第二级的导航，所以要获取上级的url path
         let parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([`${parentPath}/update`, { id:product.productId}]);

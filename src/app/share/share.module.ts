@@ -9,6 +9,7 @@ import {HeaderComponent} from "./layout/header/header.component";
 import {AlertComponent} from "./alert/alert.component";
 import {ShowAuthedDirective} from "./directive/show-authed.directive";
 import {GlobalLoadingComponent} from "./loading/global-loading.component";
+import {ConfirmComponent} from "./alert/confirm.component";
 @NgModule({
     imports:[
         CommonModule,

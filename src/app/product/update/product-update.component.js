@@ -41,6 +41,7 @@ var ProductUpdateComponent = (function (_super) {
         this.productImages = [];
         this.category = "all";
         this.updateLoading = false;
+        this.uploadLoading = false;
         this.http = http;
         this.productForm = fb.group({
             'name': ['', forms_1.Validators.required],
@@ -90,9 +91,14 @@ var ProductUpdateComponent = (function (_super) {
     ProductUpdateComponent.prototype.fileChange = function (event) {
         var _this = this;
         var files = event.target.files;
+        if (files[0].size >= 1048576) {
+            this.openModel("图片最大不能超过1M");
+            return;
+        }
+        this.uploadLoading = true;
         this.uploadService.uploadSingleFile(files[0])
             .then(function (result) {
-            console.log(result);
+            _this.uploadLoading = false;
             if (result.errorCode) {
                 _this.openModel(result.message);
             }
@@ -102,6 +108,7 @@ var ProductUpdateComponent = (function (_super) {
             }
         })
             .catch(function (error) {
+            _this.uploadLoading = false;
             _this.openModel("系统故障，请联系管理员");
         });
     };

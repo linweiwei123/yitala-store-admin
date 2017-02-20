@@ -246,6 +246,10 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+.modal-black-back{
+    background: rgba(0,0,0,0.5);
+}
 /* @pages */
 
 /* @cover */

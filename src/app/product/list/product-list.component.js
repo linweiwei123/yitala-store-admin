@@ -35,6 +35,7 @@ var ProductListComponent = (function (_super) {
         this.products = [];
         this.page = 1;
         this.size = 12;
+        this.confirmStatus = false;
         this.searchForm = fb.group({
             'category': ['all'],
             'name': ['']
@@ -58,7 +59,6 @@ var ProductListComponent = (function (_super) {
             url += "&type=all";
         }
         this.showLoading();
-        console.log(this.loading);
         this.productService.getJson(url)
             .then(function (response) {
             _this.cancelLoading();
@@ -81,12 +81,17 @@ var ProductListComponent = (function (_super) {
         modalRef.componentInstance.msg = "" + msg;
     };
     ProductListComponent.prototype.delete = function (product) {
+        this.confirmStatus = true;
+        this.toDeleteProduct = product;
+    };
+    ProductListComponent.prototype.confirm = function () {
         var _this = this;
-        this.productService.deleteJson("api/product/" + product.productId)
+        this.productService.deleteJson("api/product/" + this.toDeleteProduct.productId)
             .then(function (res) {
+            _this.confirmStatus = false;
             if (res["_body"] == "success") {
-                _this.openModel("删除成功");
-                _this.getProducts({});
+                //this.openModel("删除成功");
+                _this.getProducts({ "type": "all" });
             }
             else {
                 var responseBody = JSON.parse(res["_body"]);
@@ -94,12 +99,15 @@ var ProductListComponent = (function (_super) {
             }
         })
             .catch(function (error) {
+            _this.confirmStatus = false;
             console.log(error);
             _this.openModel("系统错误，请联系管理员");
         });
     };
+    ProductListComponent.prototype.cancel = function () {
+        this.confirmStatus = false;
+    };
     ProductListComponent.prototype.onSubmit = function (form) {
-        console.log(form);
         var param = { "type": form.category };
         if (form.name != "") {
             param["name"] = form.name;
@@ -107,7 +115,6 @@ var ProductListComponent = (function (_super) {
         this.getProducts(param);
     };
     ProductListComponent.prototype.edit = function (product) {
-        console.log(product);
         //因为本级是第二级的导航，所以要获取上级的url path
         var parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([(parentPath + "/update"), { id: product.productId }]);

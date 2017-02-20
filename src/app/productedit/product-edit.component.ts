@@ -23,6 +23,7 @@ export class ProductEditComponent extends GlobalLoadingComponent{
     productImages:Array<ProductImage> = [];
     @ViewChild('fileInput')
     fileInput:any;
+    uploadLoading:boolean = false;
 
     constructor(
         private http: Http,
@@ -49,9 +50,14 @@ export class ProductEditComponent extends GlobalLoadingComponent{
 
     fileChange(event:any):void{
         let files = event.target.files;
+        if(files[0].size>=1048576){
+            this.openModel("图片最大不能超过1M");
+            return;
+        }
+        this.uploadLoading = true;
         this.uploadService.uploadSingleFile(files[0])
             .then((result:any)=>{
-                console.log(result);
+                this.uploadLoading =false;
                 if(result.errorCode){
                     this.openModel(result.message);
                 }
@@ -61,6 +67,7 @@ export class ProductEditComponent extends GlobalLoadingComponent{
                 }
             })
             .catch((error:any)=>{
+                this.uploadLoading = false;
                 this.openModel("系统故障，请联系管理员");
             })
     }

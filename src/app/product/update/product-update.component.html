@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                             <!--/row-->
-                            <div class="row">
+                            <div class="row" [ngClass]="{'block-refresh': uploadLoading}">
                                 <div>
                                     <h3 class="box-title m-t-20" style="display: inline-block">图片</h3>
                                     <span class="text-danger">*(一款商品最多可上传6张图片,至少一张)</span>
