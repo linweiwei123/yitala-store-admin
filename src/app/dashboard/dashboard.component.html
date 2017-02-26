@@ -1,12 +1,59 @@
 
-<h1>dashboard</h1>
-<div id="id" style="margin-top: 100px;"></div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card-box">
-            <button type="button" class="btn btn-primary" (click)="openModel('信息是传进来的')">打开一个弹框</button>
+<div class="row" >
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h3 class="box-title text-center"><i class="ti-shopping-cart text-success"></i>商品总量</h3>
+            <div class="text-center">
+                <h1><sup><i class="ti-arrow-up text-success"></i></sup>{{totalProduct}}</h1>
+            </div>
+            <div style="height: 24px"></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h3 class="box-title text-center"><i class="ti-cut text-danger"></i>总销售量</h3>
+            <div class="text-center">
+                <h1><sup><i class="ti-arrow-down text-danger"></i></sup>{{totalSold}}</h1>
+            </div>
+            <span class="text-danger">{{ onSalePercent | percent }}</span>
+            <div class="progress m-b-0">
+                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" [style.width]="onSalePercent*100+'%'"> <span class="sr-only">230% Complete</span> </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h3 class="box-title text-center"><i class="ti-wallet text-info"></i>当前库存</h3>
+            <div class="text-center">
+                <h1><sup><i class="ti-arrow-up text-info"></i></sup>{{totalOnSale}}</h1>
+            </div>
+            <div style="height: 24px"></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h3 class="box-title text-center"><i class="ti-stats-up"></i>本月新到</h3>
+            <div class="text-right text-center">
+                <h1><sup><i class="ti-arrow-up text-inverse"></i></sup>{{currentMonthIn}}</h1>
+            </div>
+            <span class="text-inverse">{{currentMonInPercent | percent}}</span>
+            <div class="progress m-b-0">
+                <div class="progress-bar progress-bar-inverse" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" [style.width]="currentMonInPercent*100+'%'"> <span class="sr-only">230% Complete</span> </div>
+            </div>
         </div>
     </div>
 </div>
-
-<template ngbModalContainer></template>
+<div class="row">
+    <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12" [ngClass]="{'block-refresh': onSaleSoldLoading}">
+        <div class="white-box">
+            <h3 class="box-title">商品种类占比</h3>
+                <chart [options]="line"></chart>
+        </div>
+    </div>
+    <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12" [ngClass]="{'block-refresh': categoryShareLoading}">
+        <div class="white-box">
+            <h3 class="box-title">商品种类占比</h3>
+            <chart [options]="pie"></chart>
+        </div>
+    </div>
+</div>

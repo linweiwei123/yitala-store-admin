@@ -17,7 +17,6 @@ require('../assets/css/styles.css');
 var share_module_1 = require("./share/share.module");
 var app_routing_module_1 = require("./app-routing.module");
 var dashboard_component_1 = require("./dashboard/dashboard.component");
-var ng2_charts_1 = require("ng2-charts");
 var sidebar_component_1 = require("./share/layout/sidebar/sidebar.component");
 var product_edit_component_1 = require("./productedit/product-edit.component");
 var upload_service_1 = require("./share/service/upload.service");
@@ -30,6 +29,7 @@ var authentication_service_1 = require("./share/service/authentication.service")
 var login_component_1 = require("./login/login.component");
 var no_authed_guard_component_1 = require("./share/guard/no-authed-guard.component");
 var product_module_1 = require("./product/product.module");
+var angular2_highcharts_1 = require("angular2-highcharts");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -42,8 +42,8 @@ var AppModule = (function () {
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule,
                 app_routing_module_1.AppRoutingModule,
-                ng2_charts_1.ChartsModule,
                 share_module_1.ShareModule,
+                angular2_highcharts_1.ChartModule.forRoot(require('highcharts')),
                 product_module_1.ProductModule
             ],
             declarations: [

@@ -175,7 +175,7 @@
     left: 0;
     z-index: 5;
     content: " ";
-    background-color: rgba(255,255,255,0.85);
+    background-color: rgba(255,255,255,0.7);
 }
 
 .block-refresh:after {
@@ -249,6 +249,10 @@
 
 .modal-black-back{
     background: rgba(0,0,0,0.5);
+}
+
+chart{
+    display: block;
 }
 /* @pages */
 
