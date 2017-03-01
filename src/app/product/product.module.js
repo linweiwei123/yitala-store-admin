@@ -21,11 +21,18 @@ var http_1 = require("@angular/http");
 var forms_1 = require("@angular/forms");
 var common_1 = require("@angular/common");
 var share_module_1 = require("../share/share.module");
+var product_detail_component_1 = require("./detail/product-detail.component");
 var productRoutes = [
     {
         path: 'update',
         component: product_update_component_1.ProductUpdateComponent,
         data: { name: '商品修改' },
+        canActivate: [auth_guard_component_1.AuthGuard]
+    },
+    {
+        path: 'detail',
+        component: product_detail_component_1.ProductDetailComponent,
+        data: { name: '商品详情' },
         canActivate: [auth_guard_component_1.AuthGuard]
     },
     {
@@ -51,7 +58,8 @@ var ProductModule = (function () {
             ],
             declarations: [
                 product_list_component_1.ProductListComponent,
-                product_update_component_1.ProductUpdateComponent
+                product_update_component_1.ProductUpdateComponent,
+                product_detail_component_1.ProductDetailComponent
             ],
             schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA],
         }), 

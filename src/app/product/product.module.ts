@@ -12,12 +12,19 @@ import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ShareModule} from "../share/share.module";
+import {ProductDetailComponent} from "./detail/product-detail.component";
 
 const productRoutes:Routes = [
     {
         path:'update',
         component:ProductUpdateComponent,
         data:{name:'商品修改'},
+        canActivate:[AuthGuard]
+    },
+    {
+        path:'detail',
+        component:ProductDetailComponent,
+        data:{name:'商品详情'},
         canActivate:[AuthGuard]
     },
     {
@@ -40,7 +47,8 @@ const productRoutes:Routes = [
     ],
     declarations:[
         ProductListComponent,
-        ProductUpdateComponent
+        ProductUpdateComponent,
+        ProductDetailComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -119,6 +119,10 @@ var ProductListComponent = (function (_super) {
         var parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([(parentPath + "/update"), { id: product.productId }]);
     };
+    ProductListComponent.prototype.view = function (product) {
+        var parentPath = this.activatedRoute.parent.routeConfig.path;
+        this.router.navigate([(parentPath + "/detail"), { id: product.productId }]);
+    };
     ProductListComponent = __decorate([
         core_1.Component({
             selector: 'product-list',

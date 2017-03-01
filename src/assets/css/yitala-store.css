@@ -260,3 +260,9 @@ chart{
 a.waves-effect>span{
     padding-left: 15px;
 }
+
+@media screen and (min-width:1000px) and (max-width: 1200px) {
+    .md3-clear-left{
+        clear: left;
+    }
+}

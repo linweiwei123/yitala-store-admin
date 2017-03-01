@@ -125,4 +125,9 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
         let parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([`${parentPath}/update`, { id:product.productId}]);
     }
+
+    view(product:any){
+        let parentPath = this.activatedRoute.parent.routeConfig.path;
+        this.router.navigate([`${parentPath}/detail`,{id:product.productId}]);
+    }
 }

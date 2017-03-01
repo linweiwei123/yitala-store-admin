@@ -39,11 +39,14 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products;let i = index;" [ngClass]="{'md3-clear-left': i%4==0}">
         <div class="white-box">
             <div class="product-img">
                 <img [src]="product.images">
                 <div class="pro-img-overlay">
+                    <a href="javascript:;" class="bg-success" (click)="view(product)">
+                    <i class="fa fa-eye"></i>
+                    </a>
                     <a href="javascript:;" class="bg-info" (click)="edit(product)">
                     <i class="fa fa-edit"></i>
                     </a>
@@ -56,10 +59,10 @@
                 <span class="pro-price bg-danger">¥{{product.price}}</span>
                 <h3 class="box-title m-b-0">{{product.name}}</h3>
                 <small class="text-muted db">{{product.brand}}</small>
-
             </div>
         </div>
     </div>
+
 </div>
 
 <div>
