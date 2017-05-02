@@ -1,7 +1,8 @@
-/* tslint:disable:no-unused-variable */
 "use strict";
-var testing_1 = require('@angular/core/testing');
-var app_component_1 = require('./app.component');
+/* tslint:disable:no-unused-variable */
+Object.defineProperty(exports, "__esModule", { value: true });
+var testing_1 = require("@angular/core/testing");
+var app_component_1 = require("./app.component");
 describe('AppComponent', function () {
     beforeEach(function () {
         testing_1.TestBed.configureTestingModule({

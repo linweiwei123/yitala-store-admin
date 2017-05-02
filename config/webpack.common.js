@@ -32,25 +32,25 @@ module.exports = {
         /**
          * 配置用来解析模块的的扩展名，因为有些默认的会省略扩展名
          */
-        extensions: ['', '.ts', '.js','.json'],
+        extensions: ['.ts', '.js','.json'],
         modules:[helpers.root('src'),helpers.root('node_modules')]
     },
 
     module: {
-        loaders: [
+        rules: [
             /**
              * awesome-typescript-loader 用来配合tsconfig编译typescript
              * angular2-template-loader 用来把模块的样式和html打到component中， inlines all html and style's in angular2 components
              * angular2-router-loader lazy-load 跟之前的懒加载类似，从而写法上简单很多
              */
-            {
-                test: /\.ts$/,
-                loaders: [
-                    'awesome-typescript-loader',
-                    'angular2-template-loader',
-                    'angular2-router-loader'],
-                exclude: [/\.(spec|e2e)\.ts$/]
-            },
+            // {
+            //     test: /\.ts$/,
+            //     loaders: [
+            //         'awesome-typescript-loader',
+            //         'angular2-template-loader',
+            //         'angular2-router-loader'],
+            //     exclude: [/\.(spec|e2e)\.ts$/]
+            // },
             /*
              * Json loader support for *.json files.
              *
@@ -67,14 +67,30 @@ module.exports = {
              */
             {
                 test: /\.html$/,
-                loader: 'html'
+                use:[{
+                    loader: 'html-loader',
+                    options: {
+                        minimize: false
+                    }
+                }]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,
-                loader: 'file?name=assets/images/[name].[hash].[ext]'
-            },      {
+                use:[{
+                    loader: 'file-loader',
+                    options: {
+                        name: 'assets/images/[name].[hash].[ext]'
+                    }
+                }]
+            },
+            {
                 test: /\.(woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=assets/fonts/[name].[hash].[ext]'
+                use:[{
+                    loader: 'file-loader',
+                    options: {
+                        name: 'assets/images/[name].[hash].[ext]'
+                    }
+                }]
             },
             /**
              * app外的全部抽到应用级样式文件中
@@ -82,7 +98,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
             },
             /**
              * app下的用文本打到component中
@@ -90,7 +109,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 include: helpers.root('src', 'app'),
-                loader: 'raw'
+                loader: 'raw-loader'
             }
         ]
     },

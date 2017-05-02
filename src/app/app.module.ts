@@ -23,6 +23,12 @@ import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
 import {ProductModule} from "./product/product.module";
 import {GlobalLoadingComponent} from "./share/loading/global-loading.component";
 import {ChartModule} from "angular2-highcharts";
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+
+
+export function highchartsFactory() {
+    return require('highcharts');
+}
 
 @NgModule({
     imports: [
@@ -33,7 +39,7 @@ import {ChartModule} from "angular2-highcharts";
         ReactiveFormsModule,
         AppRoutingModule,
         ShareModule,
-        ChartModule.forRoot(require('highcharts')),
+        ChartModule,
         ProductModule
     ],
     declarations: [
@@ -48,7 +54,11 @@ import {ChartModule} from "angular2-highcharts";
         AuthenticationService,
         NoAuthedGuard,
         UploadService,
-        ProductService
+        ProductService,
+        {
+            provide: HighchartsStatic,
+            useFactory: highchartsFactory
+        },
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

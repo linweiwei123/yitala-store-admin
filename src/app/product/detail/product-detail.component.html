@@ -18,7 +18,8 @@
                     <div class="col-lg-9 col-md-9 col-sm-6" style="padding-left: 30px;">
                         <h4 class="box-title m-t-10">商品描述</h4>
                         <p>{{product.description}}</p>
-                        <h2 class="m-t-40">{{'¥'+product.price}}<small class="text-success">{{product.discount?'（'+product.discount+'%折扣）':''}}</small></h2>
+                        <h3 class="box-title m-t-40">市场价：<del><small>{{'¥'+product.price}}</small></del></h3>
+                        <h3 class="box-title m-t-15">折扣价：<span class="text-danger">{{'¥'+product.price*(product.discount?product.discount:100)/100}}</span><small class="text-success">{{product.discount?'（'+product.discount+'%折扣）':''}}</small></h3>
                         <h3 class="box-title m-t-20">关键特征</h3>
                         <ul class="list-icons">
                             <li><i class="fa fa-check text-success"></i>{{'品牌：'+product.brand}}</li>

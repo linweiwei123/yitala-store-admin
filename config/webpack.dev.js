@@ -21,6 +21,23 @@ module.exports = webpackMerge(commonConfig, {
         chunkFilename: 'scripts/[id].chunk.js'
     },
 
+    module: {
+        rules: [
+            /**
+             * awesome-typescript-loader 用来配合tsconfig编译typescript
+             * angular2-template-loader 用来把模块的样式和html打到component中， inlines all html and style's in angular2 components
+             * angular2-router-loader lazy-load 跟之前的懒加载类似，从而写法上简单很多
+             */
+            {
+                test: /\.ts$/,
+                loaders: [
+                    'awesome-typescript-loader',
+                    'angular2-template-loader',
+                    'angular2-router-loader'],
+                exclude: [/\.(spec|e2e)\.ts$/]
+            }
+        ]
+    },
     plugins: [
         new ExtractTextPlugin('[name].css')
     ],
@@ -35,7 +52,7 @@ module.exports = webpackMerge(commonConfig, {
         proxy: [
             {
                 context: ['/api/**'],
-                target: 'http://192.168.0.105:8080',
+                target: 'http://localhost:8080',
                 secure: false
             }
         ]

@@ -38,12 +38,13 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
         super();
         this.searchForm = fb.group({
             'category':['all'],
+            'status':['all'],
             'name':['']
         })
     }
 
     ngOnInit(): void {
-        this.getProducts({"type":"all"});
+        this.getProducts({"type":"all","status":"all"});
     }
 
     getProducts(param?:any):void{
@@ -55,9 +56,12 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
             if(param["name"]){
                 url += "&name=" + param["name"];
             }
+            if(param["status"]){
+                url += "&status=" + param["status"];
+            }
         }
         else {
-            url += "&type=all";
+            url += "&type=all&status=all";
         }
         this.showLoading();
         this.productService.getJson(url)
@@ -94,7 +98,7 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
                 this.confirmStatus = false;
                 if(res["_body"] == "success"){
                     //this.openModel("删除成功");
-                    this.getProducts({"type":"all"});
+                    this.getProducts({"type":"all","status":"all"});
                 }
                 else{
                     let responseBody = JSON.parse(res["_body"]);
@@ -113,7 +117,7 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     }
 
     onSubmit(form:any):void{
-        let param ={"type":form.category};
+        let param ={"type":form.category,"status":form.status};
         if(form.name != ""){
             param["name"] = form.name;
         }

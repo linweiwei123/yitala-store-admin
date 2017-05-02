@@ -1,21 +1,18 @@
+"use strict";
 /**
  * Created by Linweiwei on 2017/1/12.
  */
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var product_service_1 = require("../../share/service/product.service");
 var alert_component_1 = require("../../share/alert/alert.component");
@@ -26,23 +23,25 @@ var global_loading_component_1 = require("../../share/loading/global-loading.com
 var ProductListComponent = (function (_super) {
     __extends(ProductListComponent, _super);
     function ProductListComponent(productService, modalService, fb, router, activatedRoute) {
-        _super.call(this);
-        this.productService = productService;
-        this.modalService = modalService;
-        this.fb = fb;
-        this.router = router;
-        this.activatedRoute = activatedRoute;
-        this.products = [];
-        this.page = 1;
-        this.size = 12;
-        this.confirmStatus = false;
-        this.searchForm = fb.group({
+        var _this = _super.call(this) || this;
+        _this.productService = productService;
+        _this.modalService = modalService;
+        _this.fb = fb;
+        _this.router = router;
+        _this.activatedRoute = activatedRoute;
+        _this.products = [];
+        _this.page = 1;
+        _this.size = 12;
+        _this.confirmStatus = false;
+        _this.searchForm = fb.group({
             'category': ['all'],
+            'status': ['all'],
             'name': ['']
         });
+        return _this;
     }
     ProductListComponent.prototype.ngOnInit = function () {
-        this.getProducts({ "type": "all" });
+        this.getProducts({ "type": "all", "status": "all" });
     };
     ProductListComponent.prototype.getProducts = function (param) {
         var _this = this;
@@ -54,9 +53,12 @@ var ProductListComponent = (function (_super) {
             if (param["name"]) {
                 url += "&name=" + param["name"];
             }
+            if (param["status"]) {
+                url += "&status=" + param["status"];
+            }
         }
         else {
-            url += "&type=all";
+            url += "&type=all&status=all";
         }
         this.showLoading();
         this.productService.getJson(url)
@@ -91,7 +93,7 @@ var ProductListComponent = (function (_super) {
             _this.confirmStatus = false;
             if (res["_body"] == "success") {
                 //this.openModel("删除成功");
-                _this.getProducts({ "type": "all" });
+                _this.getProducts({ "type": "all", "status": "all" });
             }
             else {
                 var responseBody = JSON.parse(res["_body"]);
@@ -108,7 +110,7 @@ var ProductListComponent = (function (_super) {
         this.confirmStatus = false;
     };
     ProductListComponent.prototype.onSubmit = function (form) {
-        var param = { "type": form.category };
+        var param = { "type": form.category, "status": form.status };
         if (form.name != "") {
             param["name"] = form.name;
         }
@@ -117,21 +119,28 @@ var ProductListComponent = (function (_super) {
     ProductListComponent.prototype.edit = function (product) {
         //因为本级是第二级的导航，所以要获取上级的url path
         var parentPath = this.activatedRoute.parent.routeConfig.path;
-        this.router.navigate([(parentPath + "/update"), { id: product.productId }]);
+        this.router.navigate([parentPath + "/update", { id: product.productId }]);
     };
     ProductListComponent.prototype.view = function (product) {
         var parentPath = this.activatedRoute.parent.routeConfig.path;
-        this.router.navigate([(parentPath + "/detail"), { id: product.productId }]);
+        this.router.navigate([parentPath + "/detail", { id: product.productId }]);
     };
-    ProductListComponent = __decorate([
-        core_1.Component({
-            selector: 'product-list',
-            templateUrl: 'product-list.component.html',
-            styleUrls: ['product-list.component.css']
-        }), 
-        __metadata('design:paramtypes', [product_service_1.ProductService, ng_bootstrap_1.NgbModal, forms_1.FormBuilder, router_1.Router, router_1.ActivatedRoute])
-    ], ProductListComponent);
     return ProductListComponent;
 }(global_loading_component_1.GlobalLoadingComponent));
+ProductListComponent.decorators = [
+    { type: core_1.Component, args: [{
+                selector: 'product-list',
+                templateUrl: 'product-list.component.html',
+                styleUrls: ['product-list.component.css']
+            },] },
+];
+/** @nocollapse */
+ProductListComponent.ctorParameters = function () { return [
+    { type: product_service_1.ProductService, },
+    { type: ng_bootstrap_1.NgbModal, },
+    { type: forms_1.FormBuilder, },
+    { type: router_1.Router, },
+    { type: router_1.ActivatedRoute, },
+]; };
 exports.ProductListComponent = ProductListComponent;
 //# sourceMappingURL=product-list.component.js.map
