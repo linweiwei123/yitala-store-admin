@@ -47,6 +47,7 @@ export class ProductUpdateComponent extends GlobalLoadingComponent implements On
             'price':['',Validators.required],
             'discount':[''],
             'status':['inline',Validators.required],
+            'recommended':[false],
             'description':['',Validators.required],
             'color':[''],
             'size':[''],

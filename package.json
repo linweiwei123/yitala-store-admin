@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "rimraf dist && webpack --config config/webpack.dev.js  --progress --profile",
-    "build:prod": "rimraf dist && webpack --config config/webpack.prod.js  --progress --profile --bail",
+    "build:prod": "rimraf dist && webpack --config config/webpack.prod.js  --progress --profile --bail ",
     "build:aot": "rimraf dist && ngc && webpack --config config/webpack.prod.js  --progress --profile --bail",
     "start": "webpack-dev-server --hot  --watch --inline --progress --profile --port 3000",
     "test": "karma start"

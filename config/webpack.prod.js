@@ -12,7 +12,7 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 module.exports = webpackMerge(commonConfig, {
     output: {
         path: helpers.root('dist'),
-        publicPath: '/',
+        publicPath: '/admin/',
         filename: '[name].[chunkhash].bundle.js',
         chunkFilename: '[id].[chunkhash].chunk.js'
     },

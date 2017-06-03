@@ -9,6 +9,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Linweiwei on 2016/12/22.
@@ -167,17 +176,14 @@ var DashboardComponent = (function (_super) {
     };
     return DashboardComponent;
 }(global_loading_component_1.GlobalLoadingComponent));
-DashboardComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: "my-dashboard",
-                templateUrl: "dashboard.component.html",
-                styleUrls: ["dashboard.component.css"]
-            },] },
-];
-/** @nocollapse */
-DashboardComponent.ctorParameters = function () { return [
-    { type: ng_bootstrap_1.NgbModal, },
-    { type: product_service_1.ProductService, },
-]; };
+DashboardComponent = __decorate([
+    core_1.Component({
+        selector: "my-dashboard",
+        templateUrl: "dashboard.component.html",
+        styleUrls: ["dashboard.component.css"]
+    }),
+    __metadata("design:paramtypes", [ng_bootstrap_1.NgbModal,
+        product_service_1.ProductService])
+], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map
