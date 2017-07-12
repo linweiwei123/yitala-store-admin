@@ -38,3 +38,25 @@
         height: 400px;
     }
 }
+.list-style-icon .fa{
+    line-height: 38px;
+    font-size: 30px;
+    margin-right: 10px;
+}
+.list-style-icon .fa:hover{
+    color: #fb9678;
+    cursor: pointer;
+}
+.list-style-icon .fa.choosed{
+    color: #fb9678;
+}
+.td-img{
+   padding: 3px;
+}
+.td-img img{
+    width: 40px;
+}
+.table-options i.fa:hover{
+    cursor: pointer;
+    color: #fb9678;
+}

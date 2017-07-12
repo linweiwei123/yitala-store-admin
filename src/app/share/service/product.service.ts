@@ -47,9 +47,26 @@ export class ProductService{
             .catch(this.handleError);
     }
 
+    postForm(url:string,params:any){
+        console.log(params);
+        let options:RequestOptionsArgs = {};
+        options.headers = this.setFormDataHeaders();
+        options.params = params;
+        return this.http.post(url,params,options)
+            .toPromise()
+            .then((response:any) => response)
+            .catch(this.handleError);
+    }
+
     private setHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/json');
+        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        return headers;
+    }
+    private setFormDataHeaders():Headers{
+        let headers = new Headers();
+        headers.append("Content-Type", 'application/x-www-form-urlencoded');
         headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
         return headers;
     }

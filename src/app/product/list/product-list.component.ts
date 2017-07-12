@@ -11,6 +11,7 @@ import {Response} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Router, ActivatedRoute} from "@angular/router";
 import {GlobalLoadingComponent} from "../../share/loading/global-loading.component";
+import {StateService} from "../../share/service/state.service";
 
 @Component({
     selector:'product-list',
@@ -27,13 +28,15 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     totalElements:number;
     confirmStatus:boolean = false;
     toDeleteProduct:any;
+    showType:string;
 
     constructor(
         private productService:ProductService,
         private modalService: NgbModal,
         private fb:FormBuilder,
         private router:Router,
-        private activatedRoute:ActivatedRoute
+        private activatedRoute:ActivatedRoute,
+        private stateService:StateService
     ){
         super();
         this.searchForm = fb.group({
@@ -41,6 +44,7 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
             'status':['all'],
             'name':['']
         })
+        this.showType = this.stateService.productListShowType;
     }
 
     ngOnInit(): void {
@@ -130,8 +134,18 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
         this.router.navigate([`${parentPath}/update`, { id:product.productId}]);
     }
 
+    editDesc(product:any){
+        //因为本级是第二级的导航，所以要获取上级的url path
+        let parentPath = this.activatedRoute.parent.routeConfig.path;
+        this.router.navigate([`${parentPath}/description`, { id:product.productId}]);
+    }
+
     view(product:any){
         let parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([`${parentPath}/detail`,{id:product.productId}]);
+    }
+
+    toggleShowType(type:string){
+        this.showType = this.stateService.productListShowType = type;
     }
 }

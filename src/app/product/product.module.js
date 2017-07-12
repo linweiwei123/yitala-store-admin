@@ -20,11 +20,20 @@ var forms_1 = require("@angular/forms");
 var common_1 = require("@angular/common");
 var share_module_1 = require("../share/share.module");
 var product_detail_component_1 = require("./detail/product-detail.component");
+var description_component_1 = require("./desription/description.component");
+var ng2_ckeditor_1 = require("ng2-ckeditor");
+var ng2_alt_summernote_1 = require("ng2-alt-summernote");
 var productRoutes = [
     {
         path: 'update',
         component: product_update_component_1.ProductUpdateComponent,
         data: { name: '商品修改' },
+        canActivate: [auth_guard_component_1.AuthGuard]
+    },
+    {
+        path: 'description',
+        component: description_component_1.DescriptionComponent,
+        data: { name: '商品信息编辑' },
         canActivate: [auth_guard_component_1.AuthGuard]
     },
     {
@@ -54,12 +63,15 @@ ProductModule = __decorate([
             forms_1.FormsModule,
             forms_1.ReactiveFormsModule,
             share_module_1.ShareModule,
-            router_1.RouterModule.forChild(productRoutes)
+            router_1.RouterModule.forChild(productRoutes),
+            ng2_ckeditor_1.CKEditorModule,
+            ng2_alt_summernote_1.SummernoteModule
         ],
         declarations: [
             product_list_component_1.ProductListComponent,
             product_update_component_1.ProductUpdateComponent,
-            product_detail_component_1.ProductDetailComponent
+            product_detail_component_1.ProductDetailComponent,
+            description_component_1.DescriptionComponent
         ],
         schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA],
     })

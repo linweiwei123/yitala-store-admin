@@ -17,13 +17,11 @@ import {ProductService} from "./share/service/product.service";
 import {AuthGuard} from "./share/guard/auth-guard.component";
 import {AuthenticationService} from "./share/service/authentication.service";
 import {LoginComponent} from "./login/login.component";
-import {MockBackend} from "@angular/http/testing";
-import {FakeBackendProvider} from "./helpers/fake-backend";
 import {NoAuthedGuard} from "./share/guard/no-authed-guard.component";
 import {ProductModule} from "./product/product.module";
-import {GlobalLoadingComponent} from "./share/loading/global-loading.component";
 import {ChartModule} from "angular2-highcharts";
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+import {StateService} from "./share/service/state.service";
 
 
 export function highchartsFactory() {
@@ -59,6 +57,7 @@ export function highchartsFactory() {
             provide: HighchartsStatic,
             useFactory: highchartsFactory
         },
+        StateService
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

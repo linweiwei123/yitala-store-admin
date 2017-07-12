@@ -50,9 +50,25 @@ var ProductService = (function () {
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
+    ProductService.prototype.postForm = function (url, params) {
+        console.log(params);
+        var options = {};
+        options.headers = this.setFormDataHeaders();
+        options.params = params;
+        return this.http.post(url, params, options)
+            .toPromise()
+            .then(function (response) { return response; })
+            .catch(this.handleError);
+    };
     ProductService.prototype.setHeaders = function () {
         var headers = new http_1.Headers();
         headers.append("Content-Type", 'application/json');
+        headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
+        return headers;
+    };
+    ProductService.prototype.setFormDataHeaders = function () {
+        var headers = new http_1.Headers();
+        headers.append("Content-Type", 'application/x-www-form-urlencoded');
         headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
         return headers;
     };

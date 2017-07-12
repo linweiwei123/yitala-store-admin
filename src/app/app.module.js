@@ -29,6 +29,7 @@ var no_authed_guard_component_1 = require("./share/guard/no-authed-guard.compone
 var product_module_1 = require("./product/product.module");
 var angular2_highcharts_1 = require("angular2-highcharts");
 var HighchartsService_1 = require("angular2-highcharts/dist/HighchartsService");
+var state_service_1 = require("./share/service/state.service");
 function highchartsFactory() {
     return require('highcharts');
 }
@@ -68,6 +69,7 @@ AppModule = __decorate([
                 provide: HighchartsService_1.HighchartsStatic,
                 useFactory: highchartsFactory
             },
+            state_service_1.StateService
         ],
         entryComponents: [alert_component_1.AlertComponent],
         bootstrap: [app_component_1.AppComponent]

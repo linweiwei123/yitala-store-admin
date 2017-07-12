@@ -1,9 +1,13 @@
 <div class="form-horizontal">
     <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)" autocomplete="off">
-        <div class="col-sm-4 col-md-4">
+        <div class="col-sm-2 col-md-2 list-style-icon">
+            <span (click)="toggleShowType('th')"><i class="fa fa-th" [ngClass]="{'choosed':showType == 'th'}"></i></span>
+            <span (click)="toggleShowType('list')"><i class="fa fa-list" [ngClass]="{'choosed':showType == 'list'}"></i></span>
+        </div>
+        <div class="col-sm-3 col-md-3">
             <div class="form-group">
-                <label class="col-sm-3 col-md-3 control-label" title="商品类别"><div class="text-overflow-hidden">商品类别</div></label>
-                <div class=" col-sm-9 col-md-9">
+                <label class="col-sm-4 col-md-4 control-label" title="商品类别"><div class="text-overflow-hidden">商品类别</div></label>
+                <div class=" col-sm-8 col-md-8">
                     <select class="form-control" data-placeholder="请选择一个商品类别" [formControl]="searchForm.controls['category']" >
                         <option value="all">全部</option>
                         <option value="watch">手表</option>
@@ -30,11 +34,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4">
-            <label class="col-sm-3 col-md-3 control-label" title="商品名称">
+        <div class="col-sm-3 col-md-3">
+            <label class="col-sm-4 col-md-4 control-label" title="商品名称">
                 <div class="text-overflow-hidden">商品名称</div>
             </label>
-            <div class=" col-sm-9 col-md-9">
+            <div class=" col-sm-8 col-md-8">
                 <div class="form-group" role="search">
                     <div class="input-group" style="width: 100%">
                         <input type="text" class="form-control" placeholder="请输入要搜索的商品名称" [formControl]="searchForm.controls['name']">
@@ -51,8 +55,10 @@
     <div class="clear"></div>
 </div>
 
-<div class="row">
-    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products;let i = index;" [ngClass]="{'md3-clear-left': i%4==0}">
+<!-- th显示方式 -->
+<div class="row" *ngIf="showType == 'th'">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products;let i = index;"
+         [ngClass]="{'md3-clear-left': i%4==0}" >
         <div class="white-box">
             <div class="product-img">
                 <img [src]="product.images">
@@ -75,10 +81,51 @@
             </div>
         </div>
     </div>
-    <div *ngIf="products && products.length<=0" class="empty-content text-center">
-        <h3>没有符合条件的商品</h3>
-        <img src="../../../assets/images/emptystate-products.svg" alt="没有商品">
+
+</div>
+
+<!-- list显示方式 -->
+<div class="row white-box" *ngIf="showType == 'list'">
+    <div class="table-responsive" >
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>名称</th>
+                <th>品类</th>
+                <th>图片</th>
+                <th>价格</th>
+                <th>折扣</th>
+                <th>状态</th>
+                <th class="text-nowrap">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products;let i = index;">
+                <td>{{i+1}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.type}}</td>
+                <td class="td-img"><img  [src]="product.images"></td>
+                <td><span class="text-danger">¥{{product.price}}</span></td>
+                <td>{{product.discount}}</td>
+                <td>
+                    <div class="label label-table" [ngClass]="{'label-success': product.status=='inline','label-danger':product.status=='offline'}">{{product.status=='inline'?'在售':'已售出'}}</div>
+                </td>
+                <td class="text-nowrap table-options">
+                    <i class="fa fa-eye m-r-10" (click)="view(product)"></i>
+                    <i class="fa fa-pencil text-inverse m-r-10" (click)="edit(product)"></i>
+                    <i class="fa fa-edit m-r-10" (click)="editDesc(product)"></i>
+                    <i class="fa fa-close" (click)="delete(product)"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
+
+<div *ngIf="products && products.length<=0" class="empty-content text-center">
+    <h3>没有符合条件的商品</h3>
+    <img src="../../../assets/images/emptystate-products.svg" alt="没有商品">
 </div>
 
 <div>

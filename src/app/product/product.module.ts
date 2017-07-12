@@ -13,12 +13,22 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ShareModule} from "../share/share.module";
 import {ProductDetailComponent} from "./detail/product-detail.component";
+import {DescriptionComponent} from "./desription/description.component";
+import { CKEditorModule } from 'ng2-ckeditor';
+import {SummernoteModule} from "ng2-alt-summernote";
+
 
 const productRoutes:Routes = [
     {
         path:'update',
         component:ProductUpdateComponent,
         data:{name:'商品修改'},
+        canActivate:[AuthGuard]
+    },
+    {
+        path:'description',
+        component:DescriptionComponent,
+        data:{name:'商品信息编辑'},
         canActivate:[AuthGuard]
     },
     {
@@ -43,12 +53,15 @@ const productRoutes:Routes = [
         FormsModule,
         ReactiveFormsModule,
         ShareModule,
-        RouterModule.forChild(productRoutes)
+        RouterModule.forChild(productRoutes),
+        CKEditorModule,
+        SummernoteModule
     ],
     declarations:[
         ProductListComponent,
         ProductUpdateComponent,
-        ProductDetailComponent
+        ProductDetailComponent,
+        DescriptionComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

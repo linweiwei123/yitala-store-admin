@@ -29,15 +29,17 @@ var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var global_loading_component_1 = require("../../share/loading/global-loading.component");
+var state_service_1 = require("../../share/service/state.service");
 var ProductListComponent = (function (_super) {
     __extends(ProductListComponent, _super);
-    function ProductListComponent(productService, modalService, fb, router, activatedRoute) {
+    function ProductListComponent(productService, modalService, fb, router, activatedRoute, stateService) {
         var _this = _super.call(this) || this;
         _this.productService = productService;
         _this.modalService = modalService;
         _this.fb = fb;
         _this.router = router;
         _this.activatedRoute = activatedRoute;
+        _this.stateService = stateService;
         _this.products = [];
         _this.page = 1;
         _this.size = 12;
@@ -47,6 +49,7 @@ var ProductListComponent = (function (_super) {
             'status': ['all'],
             'name': ['']
         });
+        _this.showType = _this.stateService.productListShowType;
         return _this;
     }
     ProductListComponent.prototype.ngOnInit = function () {
@@ -130,9 +133,17 @@ var ProductListComponent = (function (_super) {
         var parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([parentPath + "/update", { id: product.productId }]);
     };
+    ProductListComponent.prototype.editDesc = function (product) {
+        //因为本级是第二级的导航，所以要获取上级的url path
+        var parentPath = this.activatedRoute.parent.routeConfig.path;
+        this.router.navigate([parentPath + "/description", { id: product.productId }]);
+    };
     ProductListComponent.prototype.view = function (product) {
         var parentPath = this.activatedRoute.parent.routeConfig.path;
         this.router.navigate([parentPath + "/detail", { id: product.productId }]);
+    };
+    ProductListComponent.prototype.toggleShowType = function (type) {
+        this.showType = this.stateService.productListShowType = type;
     };
     return ProductListComponent;
 }(global_loading_component_1.GlobalLoadingComponent));
@@ -146,7 +157,8 @@ ProductListComponent = __decorate([
         ng_bootstrap_1.NgbModal,
         forms_1.FormBuilder,
         router_1.Router,
-        router_1.ActivatedRoute])
+        router_1.ActivatedRoute,
+        state_service_1.StateService])
 ], ProductListComponent);
 exports.ProductListComponent = ProductListComponent;
 //# sourceMappingURL=product-list.component.js.map
