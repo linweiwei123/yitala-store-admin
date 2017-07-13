@@ -16,6 +16,8 @@ import {ProductDetailComponent} from "./detail/product-detail.component";
 import {DescriptionComponent} from "./desription/description.component";
 import { CKEditorModule } from 'ng2-ckeditor';
 import {SummernoteModule} from "ng2-alt-summernote";
+import {SimpleNotificationsModule} from "angular2-notifications/dist";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 const productRoutes:Routes = [
@@ -55,7 +57,8 @@ const productRoutes:Routes = [
         ShareModule,
         RouterModule.forChild(productRoutes),
         CKEditorModule,
-        SummernoteModule
+        SummernoteModule,
+        SimpleNotificationsModule.forRoot()
     ],
     declarations:[
         ProductListComponent,

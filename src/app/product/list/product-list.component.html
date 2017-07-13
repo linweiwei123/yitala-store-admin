@@ -63,15 +63,18 @@
             <div class="product-img">
                 <img [src]="product.images">
                 <div class="pro-img-overlay">
-                    <a href="javascript:;" class="bg-success" (click)="view(product)">
-                    <i class="fa fa-eye"></i>
-                    </a>
-                    <a href="javascript:;" class="bg-info" (click)="edit(product)">
-                    <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="javascript:;" class="bg-danger" (click)="delete(product)">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
+                        <a href="javascript:;" class="bg-success" (click)="view(product)">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="javascript:;" class="bg-info" (click)="edit(product)">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                       <a href="javascript:;" class="bg-info" (click)="editDesc(product)">
+                           <i class="fa fa-edit"></i>
+                       </a>
+                       <a href="javascript:;" class="bg-danger" (click)="delete(product)">
+                           <i class="fa fa-trash-o"></i>
+                       </a>
                 </div>
             </div>
             <div class="product-text">
@@ -172,3 +175,5 @@
         </div>
     </div>
 </div>
+
+<simple-notifications [options]="options"></simple-notifications>

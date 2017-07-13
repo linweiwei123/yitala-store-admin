@@ -60,3 +60,6 @@
     cursor: pointer;
     color: #fb9678;
 }
+.product-img .pro-img-overlay a {
+    margin: 10px auto;
+}

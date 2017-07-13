@@ -74,7 +74,7 @@
                             [config]="config"
                             [readonly]="false"
                             (change)="onChange($event)"
-                            debounce="500">
+                            debounce="0">
                     </ckeditor>
                 </div>
             </div>
@@ -82,3 +82,4 @@
     </div>
 </div>
 
+<simple-notifications [options]="options"></simple-notifications>

@@ -30,6 +30,8 @@ var product_module_1 = require("./product/product.module");
 var angular2_highcharts_1 = require("angular2-highcharts");
 var HighchartsService_1 = require("angular2-highcharts/dist/HighchartsService");
 var state_service_1 = require("./share/service/state.service");
+var dist_1 = require("angular2-notifications/dist");
+var animations_1 = require("@angular/platform-browser/animations");
 function highchartsFactory() {
     return require('highcharts');
 }
@@ -50,7 +52,9 @@ AppModule = __decorate([
             app_routing_module_1.AppRoutingModule,
             share_module_1.ShareModule,
             angular2_highcharts_1.ChartModule,
-            product_module_1.ProductModule
+            product_module_1.ProductModule,
+            dist_1.SimpleNotificationsModule.forRoot(),
+            animations_1.BrowserAnimationsModule
         ],
         declarations: [
             app_component_1.AppComponent,

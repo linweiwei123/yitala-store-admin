@@ -30,9 +30,11 @@ var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var global_loading_component_1 = require("../../share/loading/global-loading.component");
 var state_service_1 = require("../../share/service/state.service");
+var dist_1 = require("angular2-notifications/dist");
+var js_base64_1 = require("js-base64");
 var ProductListComponent = (function (_super) {
     __extends(ProductListComponent, _super);
-    function ProductListComponent(productService, modalService, fb, router, activatedRoute, stateService) {
+    function ProductListComponent(productService, modalService, fb, router, activatedRoute, stateService, notificationService) {
         var _this = _super.call(this) || this;
         _this.productService = productService;
         _this.modalService = modalService;
@@ -40,10 +42,16 @@ var ProductListComponent = (function (_super) {
         _this.router = router;
         _this.activatedRoute = activatedRoute;
         _this.stateService = stateService;
+        _this.notificationService = notificationService;
         _this.products = [];
         _this.page = 1;
         _this.size = 12;
         _this.confirmStatus = false;
+        _this.options = {
+            position: ["top", "right"],
+            timeOut: 3000,
+            lastOnBottom: true
+        };
         _this.searchForm = fb.group({
             'category': ['all'],
             'status': ['all'],
@@ -134,9 +142,28 @@ var ProductListComponent = (function (_super) {
         this.router.navigate([parentPath + "/update", { id: product.productId }]);
     };
     ProductListComponent.prototype.editDesc = function (product) {
+        var _this = this;
         //因为本级是第二级的导航，所以要获取上级的url path
         var parentPath = this.activatedRoute.parent.routeConfig.path;
-        this.router.navigate([parentPath + "/description", { id: product.productId }]);
+        //******************* !!! 这里特别注意，先查询下个页面的富文本内容，不然富文本有时候初始化不了 **********************//
+        this.showLoading();
+        this.productService.getJson("api/productDesc/" + product.productId)
+            .then(function (response) {
+            _this.cancelLoading();
+            if (response.status == 204) {
+                _this.stateService.productDesc.description = "商品信息";
+            }
+            else {
+                var desc = JSON.parse(response["_body"]);
+                _this.stateService.productDesc = desc;
+                _this.stateService.productDesc.description = js_base64_1.Base64.decode(desc.description);
+            }
+            //查询完毕，跳转页面
+            _this.router.navigate([parentPath + "/description", { id: product.productId }]);
+        })
+            .catch(function (error) {
+            _this.notificationService.error('错误', "系统错误，请联系管理员");
+        });
     };
     ProductListComponent.prototype.view = function (product) {
         var parentPath = this.activatedRoute.parent.routeConfig.path;
@@ -158,7 +185,8 @@ ProductListComponent = __decorate([
         forms_1.FormBuilder,
         router_1.Router,
         router_1.ActivatedRoute,
-        state_service_1.StateService])
+        state_service_1.StateService,
+        dist_1.NotificationsService])
 ], ProductListComponent);
 exports.ProductListComponent = ProductListComponent;
 //# sourceMappingURL=product-list.component.js.map

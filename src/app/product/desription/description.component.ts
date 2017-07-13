@@ -1,13 +1,19 @@
 /**
  * Created by yitala on 2017/7/12.
  */
-import {Component, OnInit} from "@angular/core";
+import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {Product} from "../product";
 import {Http} from "@angular/http";
 import {ProductService} from "../../share/service/product.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AlertComponent} from "../../share/alert/alert.component";
+import {Base64} from "js-base64";
+import {NotificationsService} from "angular2-notifications/dist";
+import {ProductDesc} from "../../share/models/productDesc.model";
+import {StateService} from "../../share/service/state.service";
+
+declare let CKEDITOR:any;
 
 @Component({
     selector:'product-desc',
@@ -15,7 +21,8 @@ import {AlertComponent} from "../../share/alert/alert.component";
     styleUrls:['./description.component.css']
 })
 
-export class DescriptionComponent implements OnInit{
+export class DescriptionComponent implements OnInit,OnDestroy{
+
 
     ckeditorContent:string;
     config:any;
@@ -24,14 +31,25 @@ export class DescriptionComponent implements OnInit{
     img:string = "";
     queryLoading:boolean = false;
     saveLoading:boolean = false;
+    public options = {
+        position: ["top", "right"],
+        timeOut: 3000,
+        lastOnBottom: true
+    }
+    //public timer:any;
+    public productDesc:ProductDesc = new ProductDesc();
 
     constructor(
         private productService:ProductService,
         private modalService: NgbModal,
         private activedRoute:ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private notificationService: NotificationsService,
+        private zone:NgZone,
+        private stateService:StateService
     ){
-        this.ckeditorContent = `<p>My HTML</p>`;
+        this.productDesc = this.stateService.productDesc;
+        this.ckeditorContent = this.stateService.productDesc.description;
         this.config = {
             uiColor: '#ffffff',
             autoGrow_minHeight:500,
@@ -50,6 +68,8 @@ export class DescriptionComponent implements OnInit{
         activedRoute.params.subscribe(params=>{
             this.productId = params["id"];
         });
+
+        //this.saveLoading = true;
     }
 
     ngOnInit(): void {
@@ -63,19 +83,28 @@ export class DescriptionComponent implements OnInit{
                     this.product = data;
                     let imgs = this.product.images;
                     this.img = imgs.split(",")[0];
-                    console.log(this.product);
                 })
                 .catch((error:any)=>{
                     this.queryLoading =false;
                     console.log(error);
-                    this.openModel("系统错误，请联系管理员");
+                    this.notificationService.error('错误',"系统错误，请联系管理员");
                 })
+
+
         }
     }
 
-    openModel(msg:string) {
-        const modalRef = this.modalService.open(AlertComponent,{backdrop:"static",keyboard:false,size:"sm"});
-        modalRef.componentInstance.msg = `${msg}`;
+    ngOnDestroy(): void {
+        // console.log(CKEDITOR.instances);
+        // //CKEDITOR.instances.des;
+        // if (typeof(CKEDITOR) != "undefined"){
+        //     for(let name in CKEDITOR.instances){
+        //         if (CKEDITOR.instances[name]) {
+        //             CKEDITOR.instances[name].destroy();
+        //         }
+        //         CKEDITOR.replace(name);
+        //     }
+        // }
     }
 
     back():void{
@@ -93,17 +122,23 @@ export class DescriptionComponent implements OnInit{
         this.saveLoading = true;
         let params = {
             "productId":this.productId,
-            "description":"dGhpcyBpcyBhIGV4YW1wbGU="
+            "description":Base64.encode(this.ckeditorContent)
         }
-        this.productService.postJson("api/productDesc",params)
+        let url = "api/productDesc";
+        if(this.productDesc.id){
+            params["id"] = this.productDesc.id;
+            url = "api/productDescUpdate";
+        }
+        this.productService.postJson(url,params)
             .then((res:Response)=>{
                 this.saveLoading = false;
                 if(res["_body"] == "success"){
-                    this.openModel("保存成功");
+                    this.notificationService.success('成功','保存成功');
+                    this.back();
                 }
                 else{
                     let responseBody = JSON.parse(res["_body"]);
-                    this.openModel(responseBody.message);
+                    this.notificationService.error('错误',responseBody.message);
                 }
             });
     }
