@@ -23,7 +23,7 @@ var product_detail_component_1 = require("./detail/product-detail.component");
 var description_component_1 = require("./desription/description.component");
 var ng2_ckeditor_1 = require("ng2-ckeditor");
 var ng2_alt_summernote_1 = require("ng2-alt-summernote");
-var dist_1 = require("angular2-notifications/dist");
+var angular2_notifications_1 = require("angular2-notifications");
 var productRoutes = [
     {
         path: 'update',
@@ -67,7 +67,7 @@ ProductModule = __decorate([
             router_1.RouterModule.forChild(productRoutes),
             ng2_ckeditor_1.CKEditorModule,
             ng2_alt_summernote_1.SummernoteModule,
-            dist_1.SimpleNotificationsModule.forRoot()
+            angular2_notifications_1.SimpleNotificationsModule.forRoot()
         ],
         declarations: [
             product_list_component_1.ProductListComponent,

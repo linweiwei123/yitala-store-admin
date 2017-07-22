@@ -5,11 +5,10 @@ import {Component, ViewChild} from "@angular/core";
 import {Headers, RequestOptions, Http, Response} from "@angular/http";
 import {UploadService} from "../share/service/upload.service";
 import {ProductImage} from "./ProductImage";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AlertComponent} from "../share/alert/alert.component";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {ProductService} from "../share/service/product.service";
 import {GlobalLoadingComponent} from "../share/loading/global-loading.component";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
     selector:'product-edit',
@@ -23,14 +22,20 @@ export class ProductEditComponent extends GlobalLoadingComponent{
     productImages:Array<ProductImage> = [];
     @ViewChild('fileInput')
     fileInput:any;
+    loading:boolean = false;
     uploadLoading:boolean = false;
+    public options = {
+        position: ["top", "right"],
+        timeOut: 3000,
+        lastOnBottom: true
+    }
 
     constructor(
         private http: Http,
         private uploadService:UploadService,
-        private modalService: NgbModal,
         private fb:FormBuilder,
-        private productService:ProductService
+        private productService:ProductService,
+        private notificationService:NotificationsService
     ){
         super();
         this.http = http;
@@ -52,15 +57,17 @@ export class ProductEditComponent extends GlobalLoadingComponent{
     fileChange(event:any):void{
         let files = event.target.files;
         if(files[0].size>=1048576){
-            this.openModel("图片最大不能超过1M");
+            this.notificationService.warn('提示',"图片最大不能超过1M");
+            this.fileInput.nativeElement.value="";
             return;
         }
         this.uploadLoading = true;
         this.uploadService.uploadSingleFile(files[0])
             .then((result:any)=>{
                 this.uploadLoading =false;
+                this.fileInput.nativeElement.value="";
                 if(result.errorCode){
-                    this.openModel(result.message);
+                    this.notificationService.error('错误',result.message);
                 }
                 else{
                     this.productImages.push(result as ProductImage);
@@ -69,19 +76,19 @@ export class ProductEditComponent extends GlobalLoadingComponent{
             })
             .catch((error:any)=>{
                 this.uploadLoading = false;
-                this.openModel("系统故障，请联系管理员");
+                this.notificationService.error('错误',"系统故障，请联系管理员");
             })
     }
 
 
     onSubmit(form:any):void{
           form["images"] = this.productImages;
-          this.showLoading();
+          this.loading = true;
           this.productService.postJson("api/product",form)
               .then((res:Response)=>{
-                  this.cancelLoading();
+                  this.loading = false;
                   if(res["_body"] == "success"){
-                      this.openModel("保存成功");
+                      this.notificationService.success('成功',"保存成功");
                       //清空内容并重新初始化
                       this.productForm = this.fb.group({
                           'name':['',Validators.required],
@@ -101,13 +108,14 @@ export class ProductEditComponent extends GlobalLoadingComponent{
                   }
                   else{
                       let responseBody = JSON.parse(res["_body"]);
-                      this.openModel(responseBody.message);
+                      this.notificationService.error('错误',responseBody.message);
                   }
         });
     }
 
-    openModel(msg:string) {
-        const modalRef = this.modalService.open(AlertComponent,{backdrop:"static",keyboard:false,size:"sm"});
-        modalRef.componentInstance.msg = `${msg}`;
+    removeImage(img:ProductImage):void{
+        this.productImages = this.productImages.filter((item)=>{
+            return item != img;
+        })
     }
 }

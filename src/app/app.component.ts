@@ -2,7 +2,6 @@
  * Created by Administrator on 2016/11/25.
  */
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "./shared/service/user.service";
 import {AuthenticationService} from "./share/service/authentication.service";
 
 @Component({

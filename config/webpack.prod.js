@@ -10,9 +10,14 @@ var CompressionPlugin = require("compression-webpack-plugin");
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = webpackMerge(commonConfig, {
+    entry: {
+        'polyfills': './src/polyfills.ts',
+        'vendor': './src/vendor.ts',
+        'app': './src/main-aot.ts'
+    },
     output: {
         path: helpers.root('dist'),
-        publicPath: '/admin/',
+        publicPath: '/',
         filename: '[name].[chunkhash].bundle.js',
         chunkFilename: '[id].[chunkhash].chunk.js'
     },

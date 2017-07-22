@@ -22,7 +22,7 @@ import {ProductModule} from "./product/product.module";
 import {ChartModule} from "angular2-highcharts";
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import {StateService} from "./share/service/state.service";
-import {SimpleNotificationsModule} from "angular2-notifications/dist";
+import {SimpleNotificationsModule} from "angular2-notifications";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 

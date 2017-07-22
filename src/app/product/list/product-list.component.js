@@ -2,16 +2,6 @@
 /**
  * Created by Linweiwei on 2017/1/12.
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24,41 +14,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var product_service_1 = require("../../share/service/product.service");
-var alert_component_1 = require("../../share/alert/alert.component");
-var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
-var global_loading_component_1 = require("../../share/loading/global-loading.component");
 var state_service_1 = require("../../share/service/state.service");
-var dist_1 = require("angular2-notifications/dist");
+var angular2_notifications_1 = require("angular2-notifications");
 var js_base64_1 = require("js-base64");
-var ProductListComponent = (function (_super) {
-    __extends(ProductListComponent, _super);
-    function ProductListComponent(productService, modalService, fb, router, activatedRoute, stateService, notificationService) {
-        var _this = _super.call(this) || this;
-        _this.productService = productService;
-        _this.modalService = modalService;
-        _this.fb = fb;
-        _this.router = router;
-        _this.activatedRoute = activatedRoute;
-        _this.stateService = stateService;
-        _this.notificationService = notificationService;
-        _this.products = [];
-        _this.page = 1;
-        _this.size = 12;
-        _this.confirmStatus = false;
-        _this.options = {
+var ProductListComponent = (function () {
+    function ProductListComponent(productService, fb, router, activatedRoute, stateService, notificationService) {
+        this.productService = productService;
+        this.fb = fb;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.stateService = stateService;
+        this.notificationService = notificationService;
+        this.products = [];
+        this.page = 1;
+        this.size = 12;
+        this.confirmStatus = false;
+        this.refreshLoading = false;
+        this.options = {
             position: ["top", "right"],
             timeOut: 3000,
             lastOnBottom: true
         };
-        _this.searchForm = fb.group({
+        this.searchForm = fb.group({
             'category': ['all'],
             'status': ['all'],
             'name': ['']
         });
-        _this.showType = _this.stateService.productListShowType;
-        return _this;
+        this.showType = this.stateService.productListShowType;
     }
     ProductListComponent.prototype.ngOnInit = function () {
         this.getProducts({ "type": "all", "status": "all" });
@@ -80,10 +64,10 @@ var ProductListComponent = (function (_super) {
         else {
             url += "&type=all&status=all";
         }
-        this.showLoading();
+        this.refreshLoading = true;
         this.productService.getJson(url)
             .then(function (response) {
-            _this.cancelLoading();
+            _this.refreshLoading = false;
             var databack = JSON.parse(response["_body"]);
             for (var _i = 0, _a = databack.content; _i < _a.length; _i++) {
                 var item = _a[_i];
@@ -93,14 +77,10 @@ var ProductListComponent = (function (_super) {
             _this.totalElements = databack.totalElements;
         })
             .catch(function (error) {
-            _this.cancelLoading();
+            _this.refreshLoading = false;
             console.log(error);
-            _this.openModel("系统错误，请联系管理员");
+            _this.notificationService.error('错误', "系统错误，请联系管理员");
         });
-    };
-    ProductListComponent.prototype.openModel = function (msg) {
-        var modalRef = this.modalService.open(alert_component_1.AlertComponent, { backdrop: "static", keyboard: false, size: "sm" });
-        modalRef.componentInstance.msg = "" + msg;
     };
     ProductListComponent.prototype.delete = function (product) {
         this.confirmStatus = true;
@@ -117,13 +97,13 @@ var ProductListComponent = (function (_super) {
             }
             else {
                 var responseBody = JSON.parse(res["_body"]);
-                _this.openModel(responseBody.message);
+                _this.notificationService.error('错误', responseBody.message);
             }
         })
             .catch(function (error) {
             _this.confirmStatus = false;
             console.log(error);
-            _this.openModel("系统错误，请联系管理员");
+            _this.notificationService.error('错误', "系统错误，请联系管理员");
         });
     };
     ProductListComponent.prototype.cancel = function () {
@@ -146,10 +126,10 @@ var ProductListComponent = (function (_super) {
         //因为本级是第二级的导航，所以要获取上级的url path
         var parentPath = this.activatedRoute.parent.routeConfig.path;
         //******************* !!! 这里特别注意，先查询下个页面的富文本内容，不然富文本有时候初始化不了 **********************//
-        this.showLoading();
+        this.refreshLoading = true;
         this.productService.getJson("api/productDesc/" + product.productId)
             .then(function (response) {
-            _this.cancelLoading();
+            _this.refreshLoading = false;
             if (response.status == 204) {
                 _this.stateService.productDesc.description = "商品信息";
             }
@@ -173,7 +153,7 @@ var ProductListComponent = (function (_super) {
         this.showType = this.stateService.productListShowType = type;
     };
     return ProductListComponent;
-}(global_loading_component_1.GlobalLoadingComponent));
+}());
 ProductListComponent = __decorate([
     core_1.Component({
         selector: 'product-list',
@@ -181,12 +161,11 @@ ProductListComponent = __decorate([
         styleUrls: ['product-list.component.css']
     }),
     __metadata("design:paramtypes", [product_service_1.ProductService,
-        ng_bootstrap_1.NgbModal,
         forms_1.FormBuilder,
         router_1.Router,
         router_1.ActivatedRoute,
         state_service_1.StateService,
-        dist_1.NotificationsService])
+        angular2_notifications_1.NotificationsService])
 ], ProductListComponent);
 exports.ProductListComponent = ProductListComponent;
 //# sourceMappingURL=product-list.component.js.map

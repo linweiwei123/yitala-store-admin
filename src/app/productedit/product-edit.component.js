@@ -25,22 +25,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var upload_service_1 = require("../share/service/upload.service");
-var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
-var alert_component_1 = require("../share/alert/alert.component");
 var forms_1 = require("@angular/forms");
 var product_service_1 = require("../share/service/product.service");
 var global_loading_component_1 = require("../share/loading/global-loading.component");
+var angular2_notifications_1 = require("angular2-notifications");
 var ProductEditComponent = (function (_super) {
     __extends(ProductEditComponent, _super);
-    function ProductEditComponent(http, uploadService, modalService, fb, productService) {
+    function ProductEditComponent(http, uploadService, fb, productService, notificationService) {
         var _this = _super.call(this) || this;
         _this.http = http;
         _this.uploadService = uploadService;
-        _this.modalService = modalService;
         _this.fb = fb;
         _this.productService = productService;
+        _this.notificationService = notificationService;
         _this.productImages = [];
+        _this.loading = false;
         _this.uploadLoading = false;
+        _this.options = {
+            position: ["top", "right"],
+            timeOut: 3000,
+            lastOnBottom: true
+        };
         _this.http = http;
         _this.productForm = fb.group({
             'name': ['', forms_1.Validators.required],
@@ -61,15 +66,17 @@ var ProductEditComponent = (function (_super) {
         var _this = this;
         var files = event.target.files;
         if (files[0].size >= 1048576) {
-            this.openModel("图片最大不能超过1M");
+            this.notificationService.warn('提示', "图片最大不能超过1M");
+            this.fileInput.nativeElement.value = "";
             return;
         }
         this.uploadLoading = true;
         this.uploadService.uploadSingleFile(files[0])
             .then(function (result) {
             _this.uploadLoading = false;
+            _this.fileInput.nativeElement.value = "";
             if (result.errorCode) {
-                _this.openModel(result.message);
+                _this.notificationService.error('错误', result.message);
             }
             else {
                 _this.productImages.push(result);
@@ -78,18 +85,18 @@ var ProductEditComponent = (function (_super) {
         })
             .catch(function (error) {
             _this.uploadLoading = false;
-            _this.openModel("系统故障，请联系管理员");
+            _this.notificationService.error('错误', "系统故障，请联系管理员");
         });
     };
     ProductEditComponent.prototype.onSubmit = function (form) {
         var _this = this;
         form["images"] = this.productImages;
-        this.showLoading();
+        this.loading = true;
         this.productService.postJson("api/product", form)
             .then(function (res) {
-            _this.cancelLoading();
+            _this.loading = false;
             if (res["_body"] == "success") {
-                _this.openModel("保存成功");
+                _this.notificationService.success('成功', "保存成功");
                 //清空内容并重新初始化
                 _this.productForm = _this.fb.group({
                     'name': ['', forms_1.Validators.required],
@@ -109,13 +116,14 @@ var ProductEditComponent = (function (_super) {
             }
             else {
                 var responseBody = JSON.parse(res["_body"]);
-                _this.openModel(responseBody.message);
+                _this.notificationService.error('错误', responseBody.message);
             }
         });
     };
-    ProductEditComponent.prototype.openModel = function (msg) {
-        var modalRef = this.modalService.open(alert_component_1.AlertComponent, { backdrop: "static", keyboard: false, size: "sm" });
-        modalRef.componentInstance.msg = "" + msg;
+    ProductEditComponent.prototype.removeImage = function (img) {
+        this.productImages = this.productImages.filter(function (item) {
+            return item != img;
+        });
     };
     return ProductEditComponent;
 }(global_loading_component_1.GlobalLoadingComponent));
@@ -131,9 +139,9 @@ ProductEditComponent = __decorate([
     }),
     __metadata("design:paramtypes", [http_1.Http,
         upload_service_1.UploadService,
-        ng_bootstrap_1.NgbModal,
         forms_1.FormBuilder,
-        product_service_1.ProductService])
+        product_service_1.ProductService,
+        angular2_notifications_1.NotificationsService])
 ], ProductEditComponent);
 exports.ProductEditComponent = ProductEditComponent;
 //# sourceMappingURL=product-edit.component.js.map

@@ -1,4 +1,5 @@
-<div class="form-horizontal">
+<div [ngClass]="{'block-refresh': refreshLoading}">
+<div class="form-horizontal" >
     <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)" autocomplete="off">
         <div class="col-sm-2 col-md-2 list-style-icon">
             <span (click)="toggleShowType('th')"><i class="fa fa-th" [ngClass]="{'choosed':showType == 'th'}"></i></span>
@@ -11,7 +12,7 @@
                     <select class="form-control" data-placeholder="请选择一个商品类别" [formControl]="searchForm.controls['category']" >
                         <option value="all">全部</option>
                         <option value="watch">手表</option>
-                        <option value="earring">耳钉</option>
+                        <option value="earring">耳夹／耳钉</option>
                         <option value="bag">包包</option>
                         <option value="necklace">项链</option>
                         <option value="bracelet">手链</option>
@@ -56,7 +57,7 @@
 </div>
 
 <!-- th显示方式 -->
-<div class="row" *ngIf="showType == 'th'">
+<div class="row" *ngIf="showType == 'th'" >
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" *ngFor="let product of products;let i = index;"
          [ngClass]="{'md3-clear-left': i%4==0}" >
         <div class="white-box">
@@ -88,7 +89,7 @@
 </div>
 
 <!-- list显示方式 -->
-<div class="row white-box" *ngIf="showType == 'list'">
+<div class="row white-box" *ngIf="showType == 'list'" >
     <div class="table-responsive" >
         <table class="table table-striped">
             <thead>
@@ -151,10 +152,10 @@
     </div>
     <div class="clear"></div>
 </div>
+</div>
 
 <ng-template ngbModalContainer></ng-template>
 
-<global-loading [ngClass]="{hide:!loading}"></global-loading>
 
 
 

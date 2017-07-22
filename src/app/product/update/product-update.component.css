@@ -3,7 +3,7 @@
     height: 200px;
     border: 3px dotted #CCC;
     border-radius: 25px;
-    margin: 35px 10px 20px 10px;
+    margin: 10px 10px 20px 10px;
 }
 .add-img-block:hover{
     background-size:30px 30px;

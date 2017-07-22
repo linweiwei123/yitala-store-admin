@@ -1,13 +1,41 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-info">
+        <div class="panel panel-info" [ngClass]="{'block-refresh': loading}">
             <div class="panel-heading"> 编辑商品</div>
             <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
                     <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)" autocomplete="off">
                         <div class="form-body">
-                            <h3 class="box-title">商品信息</h3>
-                            <hr>
+                            <!--/row-->
+                            <div class="row m-b-15" [ngClass]="{'block-refresh': uploadLoading}">
+                                <div style="margin-left: 10px;">
+                                    <h3 class="box-title m-t-20" style="display: inline-block">图片</h3>
+                                    <span class="text-danger">*(一款商品最多可上传6张图片,至少一张)</span>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let image of productImages">
+                                        <div class="product-img-outer">
+                                            <div class="product-img">
+                                                <img [src]="image.fileUrl"  alt="商品图片">
+                                                <div class="pro-img-overlay">
+                                                    <a (click)="removeImage(image)" class="bg-danger">
+                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="!(productImages && productImages.length>=6)">
+                                        <div class="add-img-block">
+                                            <div class="dropify-message text-center">
+                                                <i class="fa fa-cloud-upload"></i>
+                                                <p>上传图片</p>
+                                                <input type="file" class="upload" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept="image/jpeg, image/png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group" [ngClass]="{'has-error': productForm.controls['name'].dirty && productForm.controls['name'].hasError('required')}">
@@ -32,7 +60,7 @@
                                         <label class="control-label">商品分类<span class="text-danger">*</span></label>
                                         <select class="form-control" data-placeholder="Choose a Category" [formControl]="productForm.controls['type']" tabindex="1">
                                             <option value="watch">手表</option>
-                                            <option value="earring">耳钉</option>
+                                            <option value="earring">耳夹／耳钉</option>
                                             <option value="bag">包包</option>
                                             <option value="necklace">项链</option>
                                             <option value="bracelet">手链</option>
@@ -126,36 +154,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--/row-->
-                            <div class="row" [ngClass]="{'block-refresh': uploadLoading}">
-                                <div>
-                                    <h3 class="box-title m-t-20" style="display: inline-block">图片</h3>
-                                    <span class="text-danger">*(一款商品最多可上传6张图片,至少一张)</span>
-                                </div>
-                                <div class="row" >
-                                    <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let image of productImages">
-                                        <div class="product-img-outer">
-                                            <div class="product-img">
-                                                <img [src]="image.fileUrl"  alt="商品图片">
-                                                <div class="pro-img-overlay">
-                                                    <a href="javascript:void(0)" class="bg-danger">
-                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="!(productImages && productImages.length>=6)">
-                                        <div class="add-img-block">
-                                            <div class="dropify-message text-center">
-                                                <i class="fa fa-cloud-upload"></i>
-                                                <p>上传图片</p>
-                                                <input type="file" class="upload" #fileInput (change)="fileChange($event)" placeholder="Upload file" accept=".jpg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="form-actions m-t-40 text-center">
                             <button type="submit" [disabled]="productForm.invalid || productImages.length<=0" class="btn btn-success">保存</button>
@@ -169,4 +168,5 @@
 
 <template ngbModalContainer></template>
 
-<global-loading [ngClass]="{hide:!loading}"></global-loading>
+
+<simple-notifications [options]="options"></simple-notifications>

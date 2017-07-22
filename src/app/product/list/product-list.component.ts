@@ -4,15 +4,13 @@
 
 import {Component, OnInit} from "@angular/core";
 import {ProductService} from "../../share/service/product.service";
-import {AlertComponent} from "../../share/alert/alert.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Product} from "../product";
 import {Response} from "@angular/http";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Router, ActivatedRoute} from "@angular/router";
-import {GlobalLoadingComponent} from "../../share/loading/global-loading.component";
 import {StateService} from "../../share/service/state.service";
-import {NotificationsService} from "angular2-notifications/dist";
+import {NotificationsService} from "angular2-notifications";
 import {Base64} from "js-base64";
 
 @Component({
@@ -21,7 +19,7 @@ import {Base64} from "js-base64";
     styleUrls:['product-list.component.css']
 })
 
-export class ProductListComponent extends GlobalLoadingComponent implements OnInit{
+export class ProductListComponent implements OnInit{
 
     searchForm:FormGroup;
     products:Array<Product>=[];
@@ -31,6 +29,7 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
     confirmStatus:boolean = false;
     toDeleteProduct:any;
     showType:string;
+    refreshLoading:boolean = false;
 
     public options = {
         position: ["top", "right"],
@@ -40,14 +39,12 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
 
     constructor(
         private productService:ProductService,
-        private modalService: NgbModal,
         private fb:FormBuilder,
         private router:Router,
         private activatedRoute:ActivatedRoute,
         private stateService:StateService,
         private notificationService:NotificationsService
     ){
-        super();
         this.searchForm = fb.group({
             'category':['all'],
             'status':['all'],
@@ -76,10 +73,10 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
         else {
             url += "&type=all&status=all";
         }
-        this.showLoading();
+        this.refreshLoading = true;
         this.productService.getJson(url)
             .then((response:Response)=>{
-                this.cancelLoading();
+                this.refreshLoading= false;
                 let databack = JSON.parse(response["_body"]);
                 for(let item of databack.content){
                     item.images = item.images.substring(0,item.images.indexOf(','));
@@ -88,15 +85,10 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
                 this.totalElements  = databack.totalElements;
             })
             .catch((error:any)=>{
-                this.cancelLoading();
+                this.refreshLoading = false;
                 console.log(error);
-                this.openModel("系统错误，请联系管理员");
+                this.notificationService.error('错误',"系统错误，请联系管理员");
             })
-    }
-
-    openModel(msg:string) {
-        const modalRef = this.modalService.open(AlertComponent,{backdrop:"static",keyboard:false,size:"sm"});
-        modalRef.componentInstance.msg = `${msg}`;
     }
 
     delete(product:any):void{
@@ -115,13 +107,13 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
                 }
                 else{
                     let responseBody = JSON.parse(res["_body"]);
-                    this.openModel(responseBody.message);
+                    this.notificationService.error('错误',responseBody.message);
                 }
             })
             .catch((error:any)=>{
                 this.confirmStatus = false;
                 console.log(error);
-                this.openModel("系统错误，请联系管理员");
+                this.notificationService.error('错误',"系统错误，请联系管理员");
             })
     }
 
@@ -148,10 +140,10 @@ export class ProductListComponent extends GlobalLoadingComponent implements OnIn
         let parentPath = this.activatedRoute.parent.routeConfig.path;
 
         //******************* !!! 这里特别注意，先查询下个页面的富文本内容，不然富文本有时候初始化不了 **********************//
-        this.showLoading();
+        this.refreshLoading = true;
         this.productService.getJson(`api/productDesc/${product.productId}`)
             .then((response:Response)=>{
-                this.cancelLoading();
+                this.refreshLoading = false;
                 if(response.status == 204){
                     this.stateService.productDesc.description = "商品信息";
                 }

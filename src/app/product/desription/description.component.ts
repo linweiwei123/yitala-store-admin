@@ -3,13 +3,11 @@
  */
 import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {Product} from "../product";
-import {Http} from "@angular/http";
 import {ProductService} from "../../share/service/product.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AlertComponent} from "../../share/alert/alert.component";
 import {Base64} from "js-base64";
-import {NotificationsService} from "angular2-notifications/dist";
+import {NotificationsService} from "angular2-notifications";
 import {ProductDesc} from "../../share/models/productDesc.model";
 import {StateService} from "../../share/service/state.service";
 
