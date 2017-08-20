@@ -17,7 +17,6 @@ export class NoAuthedGuard implements CanActivate{
 
     canActivate():Observable<boolean>|boolean{
         return this.authenticationService.isAuthenticated.take(1).map(bool => {
-            console.log(bool);
             return !bool});
     }
 }

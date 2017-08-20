@@ -1,0 +1,16 @@
+.img-list img{
+    height: 100px;
+    width: 80px;
+}
+.img-td{
+    padding: 2px;
+}
+ul.img-list li{
+    display: inline-block;
+    padding: 5px;
+    list-style: none;
+}
+.table-td-btn:hover{
+    cursor: pointer;
+    color: #df5c53;
+}

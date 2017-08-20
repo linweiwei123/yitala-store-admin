@@ -1,0 +1,14 @@
+.order-detail-table tr td:first-child{
+    font-weight: bold;
+}
+.img-td img:hover{
+    cursor: pointer;
+}
+.shipped-yin{
+    transform: rotate(-20deg);
+    width: 110px;
+    height: 44px;
+    margin-left: calc(50% - 50px);
+    font-size: 30px;
+    border: 1px solid;
+}

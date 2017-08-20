@@ -24,6 +24,8 @@ import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import {StateService} from "./share/service/state.service";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {OrderService} from "./share/service/order.service";
+import {OrderModule} from "./order/order.module";
 
 
 export function highchartsFactory() {
@@ -41,6 +43,7 @@ export function highchartsFactory() {
         ShareModule,
         ChartModule,
         ProductModule,
+        OrderModule,
         SimpleNotificationsModule.forRoot(),
         BrowserAnimationsModule
     ],
@@ -61,7 +64,8 @@ export function highchartsFactory() {
             provide: HighchartsStatic,
             useFactory: highchartsFactory
         },
-        StateService
+        StateService,
+        OrderService
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

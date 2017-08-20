@@ -17,6 +17,9 @@ const appRoutes: Routes = [
     {   path: 'productList', loadChildren:'./product/product.module#ProductModule'},
     {   path: 'productEdit', component: ProductEditComponent,data:{name:'商品发布'},canActivate:[AuthGuard]},
     {
+        path:'order',loadChildren:'./order/order.module#OrderModule'
+    },
+    {
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full'

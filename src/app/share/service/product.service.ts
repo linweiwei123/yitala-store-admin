@@ -58,6 +58,22 @@ export class ProductService{
             .catch(this.handleError);
     }
 
+    //***********  新 ************//
+    get(url:string,params?:any){
+        let options:RequestOptionsArgs = {};
+        options.headers = this.setHeaders();
+        options.body = params;
+        return this.http.get(url,options)
+            .map((res)=>res.json())
+    }
+
+    post(url:string,params:any){
+        let options:RequestOptionsArgs = {};
+        options.headers = this.setHeaders();
+        return this.http.post(url,params,options)
+            .map((res:any)=>res.json());
+    }
+
     private setHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/json');

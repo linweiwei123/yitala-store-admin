@@ -9,6 +9,7 @@ import {HeaderComponent} from "./layout/header/header.component";
 import {AlertComponent} from "./alert/alert.component";
 import {ShowAuthedDirective} from "./directive/show-authed.directive";
 import {GlobalLoadingComponent} from "./loading/global-loading.component";
+import {OrderStatePipe} from "./pipe/common.pipe";
 @NgModule({
     imports:[
         CommonModule,
@@ -18,14 +19,16 @@ import {GlobalLoadingComponent} from "./loading/global-loading.component";
         HeaderComponent,
         AlertComponent,
         GlobalLoadingComponent,
-        ShowAuthedDirective
+        ShowAuthedDirective,
+        OrderStatePipe
     ],
     providers:[],
     exports:[
         HeaderComponent,
         AlertComponent,
         GlobalLoadingComponent,
-        ShowAuthedDirective
+        ShowAuthedDirective,
+        OrderStatePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

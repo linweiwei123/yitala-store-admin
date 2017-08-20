@@ -1,0 +1,65 @@
+<div class="row white-box" >
+    <div class="table-responsive" >
+            <div [ngClass]="{'block-loading':loading}" class="table-content-container">
+                <table class="table" >
+                    <thead>
+                    <tr>
+                        <th>买家</th>
+                        <th style="width: 100px;">#订单编号</th>
+                        <th>缩略图</th>
+                        <th>数量</th>
+                        <th>总价</th>
+                        <th>状态</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of orderInfoArr">
+                        <th scope="row">{{item.account}}</th>
+                        <th scope="row">{{item.orderCode}}</th>
+                        <td class="img-td">
+                            <ul class="img-list">
+                                <li *ngFor="let img of item.images | slice:0:3" >
+                                    <img [src]="img" alt="">
+                                </li>
+                            </ul>
+                        </td>
+                        <td>{{item.quantity}}</td>
+                        <td><span class="text-danger"><em class="rmb">¥</em>{{item.price}}</span></td>
+                        <td>
+                            <div class="label label-table" [ngClass]="{'label-primary': item.state == 'confirm','label-success':item.state == 'shipped','label-danger':item.state=='finish'}">{{item.state | orderState}}</div>
+                        </td>
+                        <td>{{item.date | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td><span class="table-td-btn" (click)="goDetail(item)">查看</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-empty" *ngIf="orderInfoArr.length==0 && !loading">
+                <div class="content-empty-box">
+                    您还没有订单信息
+                </div>
+            </div>
+    </div>
+    <div>
+        <div class="pull-right">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [pageSize]="size"
+                            [boundaryLinks]="true" (pageChange)="queryOrders()"></ngb-pagination>
+        </div>
+        <div class="pull-left">
+            <div class="pagination-size-select">
+                <label class="total">总数:{{total}}</label>
+                <label class="form-inline">显示
+                    <select id="demo-show-entries" class="form-control input-sm" [(ngModel)]="size" (change)="queryOrders()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    个每页 </label>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

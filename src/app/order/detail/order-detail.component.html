@@ -1,0 +1,86 @@
+<div class="row white-box">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div>
+            <h3 class="box-title push-left">订单 <span class="text-orange">#{{orderInfo.orderCode}}</span> 的详情</h3>
+            <div class="push-right"><a class="btn btn-info push-right" [routerLink]="['/order']">返回</a></div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table order-detail-table">
+                <tbody>
+                <tr>
+                    <td width="120">订单总额：</td>
+                    <td> <span class="text-danger">¥{{orderInfo.price}}</span></td>
+                </tr>
+                <tr>
+                    <td>商品总数：</td>
+                    <td> {{orderInfo.quantity}}</td>
+                </tr>
+                <tr>
+                    <td>订单日期：</td>
+                    <td> {{orderInfo.date | date:'yyyy-MM-dd HH:mm:ss'}} </td>
+                </tr>
+                <tr>
+                    <td>留言：</td>
+                    <td> {{orderInfo.words}} </td>
+                </tr>
+                <tr>
+                    <td>订单状态：</td>
+                    <td>
+                        <div class="label label-table" [ngClass]="{'label-primary': orderInfo.state == 'confirm','label-success':orderInfo.state == 'shipped','label-danger':orderInfo.state=='finish'}">{{orderInfo.state | orderState}}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h3 class="box-title m-t-40">商品清单</h3>
+        <table class="table text-center mt10">
+            <thead>
+            <tr>
+                <th>商品名</th>
+                <th>图片</th>
+                <th>价格</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products">
+                <th scope="row">{{product.name}}</th>
+                <td class="img-td">
+                    <img [src]="product.images" (click)="view(product)" alt="">
+                </td>
+                <td><span class="text-danger"><em class="rmb">¥</em>{{product.price*(product.discount?product.discount:100)/100}}</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h3 class="box-title m-t-40">物流地址</h3>
+        <div class="table-responsive">
+            <table class="table order-detail-table">
+                <tbody>
+                <tr>
+                    <td width="120">收获人：</td>
+                    <td> <span class="text-danger">{{orderInfo.consignee}}</span></td>
+                </tr>
+                <tr>
+                    <td>收获地址：</td>
+                    <td> {{orderInfo.address}}</td>
+                </tr>
+                <tr>
+                    <td>联系电话：</td>
+                    <td> {{orderInfo.consigneePhone}} </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="text-center" style="padding: 20px;">
+        <button class="btn btn-info" *ngIf="orderInfo.state == 'confirm'" (click)="changeState(orderInfo.orderCode)">已收款，确认发货</button>
+        <div class="text-success shipped-yin" *ngIf="orderInfo.state == 'shipped'" >已发货!</div>
+    </div>
+</div>
+
+<simple-notifications [options]="options"></simple-notifications>

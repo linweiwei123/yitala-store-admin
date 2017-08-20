@@ -270,3 +270,29 @@ a.waves-effect>span{
         clear: left;
     }
 }
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    vertical-align: middle;
+    text-align: left;
+}
+.label-bander{
+    color: #fff;
+    border-radius: 60px;
+    padding: 4px 12px 3px;
+    font-weight: 500;
+}
+.img-td img{
+    height: 120px;
+}
+.push-left{
+    float: left;
+}
+.push-right{
+    float: right;
+}
+.clear:after{
+    content: " ";
+    height: 0;
+    display: block;
+    clear: both;
+}
