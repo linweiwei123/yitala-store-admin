@@ -20,6 +20,9 @@ const appRoutes: Routes = [
         path:'order',loadChildren:'./order/order.module#OrderModule'
     },
     {
+        path:'blog',loadChildren:'./blog/blog.module#BlogModule'
+    },
+    {
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full'

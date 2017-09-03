@@ -26,6 +26,7 @@ import {SimpleNotificationsModule} from "angular2-notifications";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OrderService} from "./share/service/order.service";
 import {OrderModule} from "./order/order.module";
+import {BlogModule} from "./blog/blog.module";
 
 
 export function highchartsFactory() {
@@ -44,6 +45,7 @@ export function highchartsFactory() {
         ChartModule,
         ProductModule,
         OrderModule,
+        BlogModule,
         SimpleNotificationsModule.forRoot(),
         BrowserAnimationsModule
     ],

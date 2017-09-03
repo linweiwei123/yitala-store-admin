@@ -32,4 +32,24 @@ export class UploadService{
             );
         });
     }
+
+    uploadFile(url:string,file:any){
+        let headers = new Headers();
+        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        let formData:FormData = new FormData();
+        formData.append('file', file, file.name);
+
+        return new Promise((resolve, reject) => {
+            this.http.post(url, formData, {
+                headers: headers
+            }).subscribe(
+                res => {
+                    resolve(res.json());
+                },
+                error => {
+                    reject(error.json());
+                }
+            );
+        });
+    }
 }

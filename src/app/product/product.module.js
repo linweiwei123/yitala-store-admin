@@ -2,6 +2,12 @@
 /**
  * Created by yitala on 2017/2/19.
  */
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
@@ -49,30 +55,28 @@ var ProductModule = (function () {
     }
     return ProductModule;
 }());
-ProductModule.decorators = [
-    { type: core_1.NgModule, args: [{
-                imports: [
-                    common_1.CommonModule,
-                    ng_bootstrap_1.NgbModule.forRoot(),
-                    http_1.HttpModule,
-                    forms_1.FormsModule,
-                    forms_1.ReactiveFormsModule,
-                    share_module_1.ShareModule,
-                    router_1.RouterModule.forChild(productRoutes),
-                    ng2_ckeditor_1.CKEditorModule,
-                    ng2_alt_summernote_1.SummernoteModule,
-                    angular2_notifications_1.SimpleNotificationsModule.forRoot()
-                ],
-                declarations: [
-                    product_list_component_1.ProductListComponent,
-                    product_update_component_1.ProductUpdateComponent,
-                    product_detail_component_1.ProductDetailComponent,
-                    description_component_1.DescriptionComponent
-                ],
-                schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA],
-            },] },
-];
-/** @nocollapse */
-ProductModule.ctorParameters = function () { return []; };
+ProductModule = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            ng_bootstrap_1.NgbModule.forRoot(),
+            http_1.HttpModule,
+            forms_1.FormsModule,
+            forms_1.ReactiveFormsModule,
+            share_module_1.ShareModule,
+            router_1.RouterModule.forChild(productRoutes),
+            ng2_ckeditor_1.CKEditorModule,
+            ng2_alt_summernote_1.SummernoteModule,
+            angular2_notifications_1.SimpleNotificationsModule.forRoot()
+        ],
+        declarations: [
+            product_list_component_1.ProductListComponent,
+            product_update_component_1.ProductUpdateComponent,
+            product_detail_component_1.ProductDetailComponent,
+            description_component_1.DescriptionComponent
+        ],
+        schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA],
+    })
+], ProductModule);
 exports.ProductModule = ProductModule;
 //# sourceMappingURL=product.module.js.map

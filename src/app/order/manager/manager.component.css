@@ -10,7 +10,3 @@ ul.img-list li{
     padding: 5px;
     list-style: none;
 }
-.table-td-btn:hover{
-    cursor: pointer;
-    color: #df5c53;
-}

@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="white-box" style="padding: 25px;" [ngClass]="{'block-refresh': saveLoading}">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <h2 class="m-b-0 m-t-0">博客发布</h2>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <button class="btn btn-info pull-right" (click)="back()">返回</button>
+                        <a  class="pull-right option-item"  (click)="showModal()">
+                            <i class="fa fa-image" aria-hidden="true"></i>
+                            <span>打开图库</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div style="margin-bottom: 15px;">
+                        <label class="control-label">标题<span class="text-danger">*</span></label>
+                        <input type="text" id="title" class="form-control" [(ngModel)]="title" placeholder="请输入博客名称">
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-bottom: 15px;">
+                        <label class="control-label">封面图片地址<span class="text-danger">*</span></label>
+                        <input type="text" id="image" class="form-control" [(ngModel)]="image" placeholder="这里黏贴封面图片地址">
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="margin-bottom: 15px;">
+                        <label class="control-label">摘要<span class="text-danger">*</span></label>
+                        <textarea class="form-control" [(ngModel)]="blogAbstract" rows="3" placeholder="100字的摘要"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div >
+                        <label class="control-label">内容<span class="text-danger">*</span></label>
+                    </div>
+                    <ckeditor
+                            [(ngModel)]="ckeditorContent"
+                            [config]="config"
+                            [readonly]="false"
+                            (change)="onChange($event)"
+                            debounce="0">
+                    </ckeditor>
+                </div>
+                <div class="row">
+                    <div class="text-center" style="margin-top: 25px;">
+                        <button type="submit"  class="btn btn-success" (click)="submit()">{{id?'更新':'发布'}}</button>
+                        <button type="button" class="btn btn-default" (click)="back()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-black-back fade" [ngClass]="{'in show':modalStatus}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="hideModal()">×</button>
+                <h4 class="modal-title">博客专用图片库</h4>
+            </div>
+            <div class="modal-body" style="max-height: 500px;overflow: auto;">
+                <file-manager (onSelect)="selectImage($event)"></file-manager>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="hideModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<simple-notifications [options]="options"></simple-notifications>

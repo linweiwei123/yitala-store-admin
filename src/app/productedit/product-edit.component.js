@@ -9,6 +9,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Linweiwei on 2017/1/12.
@@ -118,23 +127,21 @@ var ProductEditComponent = (function (_super) {
     };
     return ProductEditComponent;
 }(global_loading_component_1.GlobalLoadingComponent));
-ProductEditComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'product-edit',
-                templateUrl: 'product-edit.component.html',
-                styleUrls: ['product-edit.component.css']
-            },] },
-];
-/** @nocollapse */
-ProductEditComponent.ctorParameters = function () { return [
-    { type: http_1.Http, },
-    { type: upload_service_1.UploadService, },
-    { type: forms_1.FormBuilder, },
-    { type: product_service_1.ProductService, },
-    { type: angular2_notifications_1.NotificationsService, },
-]; };
-ProductEditComponent.propDecorators = {
-    'fileInput': [{ type: core_1.ViewChild, args: ['fileInput',] },],
-};
+__decorate([
+    core_1.ViewChild('fileInput'),
+    __metadata("design:type", Object)
+], ProductEditComponent.prototype, "fileInput", void 0);
+ProductEditComponent = __decorate([
+    core_1.Component({
+        selector: 'product-edit',
+        templateUrl: 'product-edit.component.html',
+        styleUrls: ['product-edit.component.css']
+    }),
+    __metadata("design:paramtypes", [http_1.Http,
+        upload_service_1.UploadService,
+        forms_1.FormBuilder,
+        product_service_1.ProductService,
+        angular2_notifications_1.NotificationsService])
+], ProductEditComponent);
 exports.ProductEditComponent = ProductEditComponent;
 //# sourceMappingURL=product-edit.component.js.map

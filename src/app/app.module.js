@@ -34,6 +34,7 @@ var angular2_notifications_1 = require("angular2-notifications");
 var animations_1 = require("@angular/platform-browser/animations");
 var order_service_1 = require("./share/service/order.service");
 var order_module_1 = require("./order/order.module");
+var blog_module_1 = require("./blog/blog.module");
 function highchartsFactory() {
     return require('highcharts');
 }
@@ -56,6 +57,7 @@ AppModule = __decorate([
             angular2_highcharts_1.ChartModule,
             product_module_1.ProductModule,
             order_module_1.OrderModule,
+            blog_module_1.BlogModule,
             angular2_notifications_1.SimpleNotificationsModule.forRoot(),
             animations_1.BrowserAnimationsModule
         ],
