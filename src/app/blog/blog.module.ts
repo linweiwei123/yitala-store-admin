@@ -14,7 +14,7 @@ import {ShareModule} from "../share/share.module";
 import {BlogManagerComponent} from "./manager/blog-manager.component";
 import {BlogEditComponent} from "./edit/blog-edit.component";
 import {CKEditorModule} from "ng2-ckeditor";
-import {FileManagerComponent} from "../common/file-manager.component";
+
 
 const BlogRoutes = [
     {
@@ -53,8 +53,7 @@ const BlogRoutes = [
     ],
     declarations:[
         BlogManagerComponent,
-        BlogEditComponent,
-        FileManagerComponent
+        BlogEditComponent
     ],
     schemas:[
         CUSTOM_ELEMENTS_SCHEMA

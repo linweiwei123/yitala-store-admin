@@ -16,6 +16,9 @@ export class FileManagerComponent implements OnInit{
 
     imageArr:Array<BlogImage> = [];
 
+    @Input()
+    urlType:string;
+
     @Output()
     onSelect = new EventEmitter();
 
@@ -41,7 +44,7 @@ export class FileManagerComponent implements OnInit{
 
     getList(){
             this.imageArr = [];
-       this.productService.get("api/filemanager/list",{})
+       this.productService.get(`api/filemanager/list/${this.urlType}`,{})
            .subscribe(
                (res)=>{
 
@@ -72,7 +75,7 @@ export class FileManagerComponent implements OnInit{
             return;
         }
         this.loading = true;
-        this.uploadService.uploadFile("api/filemanager/upload",files[0])
+        this.uploadService.uploadFile(`api/filemanager/upload/${this.urlType}`,files[0])
             .then((result:any)=>{
                 this.loading =false;
                 this.fileInput.nativeElement.value="";

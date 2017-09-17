@@ -10,6 +10,7 @@ import {AlertComponent} from "./alert/alert.component";
 import {ShowAuthedDirective} from "./directive/show-authed.directive";
 import {GlobalLoadingComponent} from "./loading/global-loading.component";
 import {OrderStatePipe} from "./pipe/common.pipe";
+import {FileManagerComponent} from "../common/file-manager.component";
 @NgModule({
     imports:[
         CommonModule,
@@ -20,7 +21,8 @@ import {OrderStatePipe} from "./pipe/common.pipe";
         AlertComponent,
         GlobalLoadingComponent,
         ShowAuthedDirective,
-        OrderStatePipe
+        OrderStatePipe,
+        FileManagerComponent
     ],
     providers:[],
     exports:[
@@ -28,7 +30,8 @@ import {OrderStatePipe} from "./pipe/common.pipe";
         AlertComponent,
         GlobalLoadingComponent,
         ShowAuthedDirective,
-        OrderStatePipe
+        OrderStatePipe,
+        FileManagerComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

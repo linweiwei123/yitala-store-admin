@@ -17,6 +17,7 @@ var alert_component_1 = require("./alert/alert.component");
 var show_authed_directive_1 = require("./directive/show-authed.directive");
 var global_loading_component_1 = require("./loading/global-loading.component");
 var common_pipe_1 = require("./pipe/common.pipe");
+var file_manager_component_1 = require("../common/file-manager.component");
 var ShareModule = (function () {
     function ShareModule() {
     }
@@ -33,7 +34,8 @@ ShareModule = __decorate([
             alert_component_1.AlertComponent,
             global_loading_component_1.GlobalLoadingComponent,
             show_authed_directive_1.ShowAuthedDirective,
-            common_pipe_1.OrderStatePipe
+            common_pipe_1.OrderStatePipe,
+            file_manager_component_1.FileManagerComponent
         ],
         providers: [],
         exports: [
@@ -41,7 +43,8 @@ ShareModule = __decorate([
             alert_component_1.AlertComponent,
             global_loading_component_1.GlobalLoadingComponent,
             show_authed_directive_1.ShowAuthedDirective,
-            common_pipe_1.OrderStatePipe
+            common_pipe_1.OrderStatePipe,
+            file_manager_component_1.FileManagerComponent
         ],
         schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA]
     })

@@ -64,7 +64,7 @@
                 <h4 class="modal-title">博客专用图片库</h4>
             </div>
             <div class="modal-body" style="max-height: 500px;overflow: auto;">
-                <file-manager (onSelect)="selectImage($event)"></file-manager>
+                <file-manager [urlType]="'blog'" (onSelect)="selectImage($event)"></file-manager>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" (click)="hideModal()">关闭</button>
