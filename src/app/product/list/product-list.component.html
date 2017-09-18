@@ -64,24 +64,32 @@
             <div class="product-img">
                 <img [src]="product.images">
                 <div class="pro-img-overlay">
+                    <div class="img-wrapper">
                         <a href="javascript:;" class="bg-success" (click)="view(product)">
                             <i class="fa fa-eye"></i>
                         </a>
+                    </div>
+                    <div class="img-wrapper">
                         <a href="javascript:;" class="bg-info" (click)="edit(product)">
                             <i class="fa fa-pencil"></i>
                         </a>
-                       <a href="javascript:;" class="bg-info" (click)="editDesc(product)">
-                           <i class="fa fa-edit"></i>
-                       </a>
-                       <a href="javascript:;" class="bg-danger" (click)="delete(product)">
-                           <i class="fa fa-trash-o"></i>
-                       </a>
+                    </div>
+                    <div class="img-wrapper">
+                        <a href="javascript:;" class="bg-info" (click)="editDesc(product)">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+                    <div class="img-wrapper">
+                        <a href="javascript:;" class="bg-theme" (click)="delete(product)">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="product-text">
                 <span class="pro-price bg-danger">¥{{product.price}}</span>
-                <h3 class="box-title m-b-0">{{product.name}}</h3>
-                <small class="text-muted db">{{product.brand}}</small>
+                <p class="box-title m-b-0" title="{{product.name}}">{{product.name}}</p>
+                <div class="sub-box-title">{{product.brand}}</div>
             </div>
         </div>
     </div>
@@ -135,7 +143,7 @@
 <div>
     <div class="pull-right">
         <ngb-pagination [collectionSize]="totalElements" [(page)]="page" [pageSize]="size"
-                        [boundaryLinks]="true" (pageChange)="getProducts()"></ngb-pagination>
+                        [boundaryLinks]="true" [maxSize]="10" (pageChange)="getProducts()"></ngb-pagination>
     </div>
     <div class="pull-left">
         <div class="pagination-size-select">

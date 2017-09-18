@@ -23,7 +23,7 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         //首次初始化未登录
-        this.authenticationService.checkIsAuthenticated();
+        this.authenticationService.autoLogin();
         this.authenticationService.isAuthenticated.subscribe(function (isAuthenticated) {
             if (isAuthenticated) {
                 _this.isSignOn = true;

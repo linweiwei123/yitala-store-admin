@@ -5,12 +5,13 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers, RequestOptionsArgs} from "@angular/http";
 import {AuthenticationService} from "./authentication.service";
+import {JwtService} from "./jwt.service";
 @Injectable()
 export class ProductService{
 
     constructor(
         private http:Http,
-        private authenticationServie:AuthenticationService
+        private jwtService:JwtService
     ){}
 
     private handleError(error: any): Promise<any> {
@@ -77,13 +78,13 @@ export class ProductService{
     private setHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization",this.jwtService.getToken());
         return headers;
     }
     private setFormDataHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/x-www-form-urlencoded');
-        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization",this.jwtService.getToken());
         return headers;
     }
 }

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
 
     ngOnInit(): void {
         //首次初始化未登录
-        this.authenticationService.checkIsAuthenticated();
+        this.authenticationService.autoLogin();
         this.authenticationService.isAuthenticated.subscribe(
             (isAuthenticated)=>{
                 if(isAuthenticated){

@@ -310,3 +310,6 @@ a.option-item:hover{
     color: #df5c53;
     cursor: pointer;
 }
+.content-empty-box{
+    text-align: center;
+}

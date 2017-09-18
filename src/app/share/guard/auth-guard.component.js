@@ -24,15 +24,10 @@ var AuthGuard = (function () {
         var _this = this;
         this.authenticationService.isAuthenticated.subscribe(function (isAuthenticated) {
             if (!isAuthenticated) {
-                _this.router.navigate(['/login']);
+                _this.router.navigate(["/login"]);
             }
-            else {
-                _this.isAuthenticated = isAuthenticated;
-            }
-        }, function (err) {
-            console.log(err);
         });
-        return this.isAuthenticated;
+        return this.authenticationService.isAuthenticated.take(1);
     };
     return AuthGuard;
 }());

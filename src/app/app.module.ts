@@ -27,6 +27,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OrderService} from "./share/service/order.service";
 import {OrderModule} from "./order/order.module";
 import {BlogModule} from "./blog/blog.module";
+import {JwtService} from "./share/service/jwt.service";
 
 
 export function highchartsFactory() {
@@ -62,6 +63,7 @@ export function highchartsFactory() {
         NoAuthedGuard,
         UploadService,
         ProductService,
+        JwtService,
         {
             provide: HighchartsStatic,
             useFactory: highchartsFactory

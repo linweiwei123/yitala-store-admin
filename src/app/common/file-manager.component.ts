@@ -43,11 +43,16 @@ export class FileManagerComponent implements OnInit{
     }
 
     getList(){
-            this.imageArr = [];
+        this.imageArr = [];
+        this.loading = true;
        this.productService.get(`api/filemanager/list/${this.urlType}`,{})
            .subscribe(
                (res)=>{
-
+                   this.loading = false;
+                   this.imageArr.push({
+                       urlSlim:"none",
+                       url:"none"
+                   });
                    for(let item of res){
                        let obj = {
                            urlSlim:item +"?&imageView2/1/w/120/h/120",
@@ -55,11 +60,6 @@ export class FileManagerComponent implements OnInit{
                        };
                        this.imageArr.push(obj);
                    }
-                   this.imageArr.push({
-                       urlSlim:"none",
-                       url:"none"
-                   });
-                   console.log(res);
                },
                (error)=>{
                    this.notificationService.error("错误","获取图片列表错误，请联系管理员")

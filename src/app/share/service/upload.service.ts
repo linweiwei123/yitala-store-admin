@@ -5,17 +5,19 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
 import {AuthenticationService} from "./authentication.service";
+import {JwtService} from "./jwt.service";
 @Injectable()
 export class UploadService{
 
     constructor(
         private http:Http,
+        private jwtService:JwtService,
         private authenticationServie:AuthenticationService
     ){}
 
     uploadSingleFile(file:any){
         let headers = new Headers();
-        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization",this.jwtService.getToken());
         let formData:FormData = new FormData();
         formData.append('file', file, file.name);
 
@@ -35,7 +37,7 @@ export class UploadService{
 
     uploadFile(url:string,file:any){
         let headers = new Headers();
-        headers.append("Authorization",this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization",this.jwtService.getToken());
         let formData:FormData = new FormData();
         formData.append('file', file, file.name);
 

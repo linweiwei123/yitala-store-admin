@@ -503,7 +503,7 @@ hr {
   background-color: #fec107 !important;
 }
 .bg-danger {
-  background-color: #fb9678 !important;
+  background-color: #bd4147 !important;
 }
 .bg-theme {
   background-color: #ff6849 !important;
@@ -902,6 +902,8 @@ pre {
   width: 240px;
   float: left;
   background: #ffffff;
+  position: fixed;
+  top: 0;
 }
 .top-left-part a {
   color: #ffffff;
@@ -921,10 +923,13 @@ pre {
 }
 .navbar-default {
   border: 0px;
-  position: fixed;
+  position: absolute;
 }
 .navbar-top-links {
   margin-right: 0;
+}
+.navbar-top-links.navbar-left{
+  margin-left: 240px;
 }
 .navbar-top-links .badge {
   position: absolute;
@@ -1481,7 +1486,7 @@ table.dataTable thead .sorting:after {
 }
 .white-box {
   background: #ffffff;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 15px;
 }
 .white-box .box-title {
@@ -5034,9 +5039,6 @@ ul.list-icons li i {
   text-align: center;
   position: relative;
 }
-.product-img img {
-  max-width: 100%;
-}
 .product-img .pro-img-overlay {
   position: absolute;
   width: 100%;
@@ -5055,7 +5057,7 @@ ul.list-icons li i {
   -webkit-border-radius: 100%;
   -o-border-radius: 100%;
   text-align: center;
-  padding: 11px 0;
+  padding: 6px 0;
   color: #ffffff;
   margin: 10% auto;
 }
@@ -7342,7 +7344,7 @@ ul.pro-amenities li span i {
     margin: 0px 0 0px 240px;
   }
   .navbar-default {
-    position: fixed;
+    position: absolute;
     width: 100%;
     top: 0px;
   }

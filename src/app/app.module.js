@@ -35,6 +35,7 @@ var animations_1 = require("@angular/platform-browser/animations");
 var order_service_1 = require("./share/service/order.service");
 var order_module_1 = require("./order/order.module");
 var blog_module_1 = require("./blog/blog.module");
+var jwt_service_1 = require("./share/service/jwt.service");
 function highchartsFactory() {
     return require('highcharts');
 }
@@ -74,6 +75,7 @@ AppModule = __decorate([
             no_authed_guard_component_1.NoAuthedGuard,
             upload_service_1.UploadService,
             product_service_1.ProductService,
+            jwt_service_1.JwtService,
             {
                 provide: HighchartsService_1.HighchartsStatic,
                 useFactory: highchartsFactory

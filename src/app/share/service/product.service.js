@@ -14,11 +14,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var authentication_service_1 = require("./authentication.service");
+var jwt_service_1 = require("./jwt.service");
 var ProductService = (function () {
-    function ProductService(http, authenticationServie) {
+    function ProductService(http, jwtService) {
         this.http = http;
-        this.authenticationServie = authenticationServie;
+        this.jwtService = jwtService;
     }
     ProductService.prototype.handleError = function (error) {
         console.error('An error occurred', error);
@@ -77,13 +77,13 @@ var ProductService = (function () {
     ProductService.prototype.setHeaders = function () {
         var headers = new http_1.Headers();
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization", this.jwtService.getToken());
         return headers;
     };
     ProductService.prototype.setFormDataHeaders = function () {
         var headers = new http_1.Headers();
         headers.append("Content-Type", 'application/x-www-form-urlencoded');
-        headers.append("Authorization", this.authenticationServie.getAuthorizationToken());
+        headers.append("Authorization", this.jwtService.getToken());
         return headers;
     };
     return ProductService;
@@ -91,7 +91,7 @@ var ProductService = (function () {
 ProductService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http,
-        authentication_service_1.AuthenticationService])
+        jwt_service_1.JwtService])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

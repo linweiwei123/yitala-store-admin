@@ -6,6 +6,8 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject, ReplaySubject, Observable} from "rxjs";
 import {User} from "../models/user.model";
 import {Http, Response} from "@angular/http";
+import {JwtService} from "./jwt.service";
+import {ProductService} from "./product.service";
 
 @Injectable()
 export class AuthenticationService{
@@ -17,8 +19,34 @@ export class AuthenticationService{
     public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
     constructor(
-        private http:Http
+        private http:Http,
+        private productService:ProductService,
+        private jwtService:JwtService
     ){}
+
+    //app启动时检查token是否有效，有效则获取用户，无效则删除用户信息
+    autoLogin(){
+            console.log(this.jwtService.getToken());
+        if(this.jwtService.getToken()){
+            this.productService.get("api/user")
+                .subscribe(
+                    (data)=>{
+                        console.log("get user:",data);
+                        let user = new User();
+                        user.username = data.username;
+                        user.token = this.jwtService.getToken();
+                        this.setAuth(user);
+                    },
+                    (error)=>{
+                        console.log("get user error:",error);
+                        this.cleanAuth();
+                    }
+                );
+        }
+        else {
+            this.cleanAuth();
+        }
+    }
 
     login(username:string,password:string):Observable<boolean>{
         let param = {username:username,password:password};
@@ -46,31 +74,16 @@ export class AuthenticationService{
     }
 
 
-    checkIsAuthenticated():void{
-        let currentUser = window.localStorage.getItem('currentUser');
-        if(currentUser){
-            this.setAuth(JSON.parse(currentUser));
-        }
-        else{
-            this.cleanAuth();
-        }
-    }
-
     setAuth(user:User):void{
+        this.jwtService.saveToken(user.token);
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
-        window.localStorage.setItem('currentUser',JSON.stringify(user));
     }
 
     cleanAuth(){
+        this.jwtService.destoryToken();
         this.currentUserSubject.next(new User());
         this.isAuthenticatedSubject.next(false);
-        window.localStorage.removeItem('currentUser');
     }
 
-    getAuthorizationToken(){
-        let currentUser = window.localStorage.getItem('currentUser');
-        let user = JSON.parse(currentUser);
-        return user.token;
-    }
 }

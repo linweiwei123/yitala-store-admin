@@ -19,9 +19,7 @@ var NoAuthedGuard = (function () {
         this.authenticationService = authenticationService;
     }
     NoAuthedGuard.prototype.canActivate = function () {
-        return this.authenticationService.isAuthenticated.take(1).map(function (bool) {
-            return !bool;
-        });
+        return this.authenticationService.isAuthenticated.take(1).map(function (isAuth) { return !isAuth; });
     };
     return NoAuthedGuard;
 }());
