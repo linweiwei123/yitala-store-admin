@@ -46,6 +46,10 @@ export class BlogManagerComponent implements OnInit{
                 this.loading = false;
                 this.blogArr = data.list;
                 this.total = data.total;
+            },
+            (error:any)=>{
+                this.loading = false;
+                this.notificationService.error('错误',error);
             }
         );
     }

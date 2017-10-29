@@ -3,6 +3,7 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "./share/service/authentication.service";
+import {LoginService} from "./share/service/login.service";
 
 @Component({
     selector:'my-app',
@@ -14,16 +15,22 @@ import {AuthenticationService} from "./share/service/authentication.service";
 })
 
 export class AppComponent implements OnInit{
-    title = '英雄帖';
+
     isSignOn:boolean = false;
+    public options = {
+        position: ["top", "right"],
+        timeOut: 3000,
+        lastOnBottom: true
+    }
 
     constructor(
-        private authenticationService:AuthenticationService
+        private authenticationService:AuthenticationService,
+        private loginService:LoginService
     ){}
 
     ngOnInit(): void {
         //首次初始化未登录
-        this.authenticationService.autoLogin();
+        this.loginService.autoLogin();
         this.authenticationService.isAuthenticated.subscribe(
             (isAuthenticated)=>{
                 if(isAuthenticated){

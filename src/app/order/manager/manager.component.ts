@@ -7,6 +7,7 @@ import {OrderInfo} from "./OrderInfo";
 import {Router} from "@angular/router";
 import {ProductService} from "../../share/service/product.service";
 import {OrderService} from "../../share/service/order.service";
+import {NotificationsService} from "angular2-notifications";
 @Component({
     selector:'order-manager',
     templateUrl:'./manager.component.html',
@@ -20,11 +21,18 @@ export class ManagerComponent implements OnInit{
     total:number;
     page:number = 1;
     size:number = 10;
-
+    confirmStatus:boolean = false;
+    toDeleteOrder:OrderInfo;
+    public options = {
+        position: ["top", "right"],
+        timeOut: 3000,
+        lastOnBottom: true
+    }
     constructor(
         private productService:ProductService,
         private orderService:OrderService,
-        private router:Router
+        private router:Router,
+        private notificationService:NotificationsService
     ){}
 
     ngOnInit(): void {
@@ -48,4 +56,28 @@ export class ManagerComponent implements OnInit{
         this.router.navigate(['order/detail',item.orderCode])
     }
 
+    deleteOrder(item:any):void{
+        this.confirmStatus = true;
+        this.toDeleteOrder = item;
+    }
+
+    cancel():void{
+        this.confirmStatus = false;
+    }
+
+    confirm(){
+        this.productService.delete(`api/order/delete/${this.toDeleteOrder.orderCode}`).subscribe(
+            (data:any)=>{
+                if(data == true){
+                    this.confirmStatus = false;
+                    this.notificationService.success('成功',"删除成功");
+                    this.queryOrders();
+                }
+                else{
+                    this.notificationService.error('错误',"系统错误，请联系管理员");
+                }
+            }
+        )
+
+    }
 }

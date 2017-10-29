@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../share/service/authentication.service";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {LoginService} from "../share/service/login.service";
 /**
  * Created by yitala on 2017/1/15.
  */
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit{
 
     constructor(
         private router:Router,
-        private authenticationService:AuthenticationService,
+        private loginService:LoginService,
         private fb:FormBuilder
     ){
         this.loginForm = this.fb.group({
@@ -32,9 +33,9 @@ export class LoginComponent implements OnInit{
 
     submitForm(form:any){
         this.loading = true;
-        this.authenticationService.login(form["username"],form["password"])
+        this.loginService.login(form["username"],form["password"])
             .subscribe(
-                (result)=>{
+                (result:any)=>{
                     console.log(result);
                     if(result == true){
                         this.router.navigate(["/dashboard"]);
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit{
                         this.loading = false;
                     }
                 },
-                error=>{
+                (error:any)=>{
                     this.error = "账号或者密码错误";
                     this.loading = false;
                 }

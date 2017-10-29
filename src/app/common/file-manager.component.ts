@@ -47,7 +47,7 @@ export class FileManagerComponent implements OnInit{
         this.loading = true;
        this.productService.get(`api/filemanager/list/${this.urlType}`,{})
            .subscribe(
-               (res)=>{
+               (res:any)=>{
                    this.loading = false;
                    this.imageArr.push({
                        urlSlim:"none",

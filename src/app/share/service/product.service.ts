@@ -6,11 +6,12 @@ import {Injectable} from "@angular/core";
 import {Http, Headers, RequestOptionsArgs} from "@angular/http";
 import {AuthenticationService} from "./authentication.service";
 import {JwtService} from "./jwt.service";
+import {ExtendHttpInterceptor} from "./ExtendHttpInterceptor";
 @Injectable()
 export class ProductService{
 
     constructor(
-        private http:Http,
+        private http:ExtendHttpInterceptor,
         private jwtService:JwtService
     ){}
 
@@ -21,7 +22,6 @@ export class ProductService{
 
     postJson(url:string,params:any){
         let options:RequestOptionsArgs = {};
-        options.headers = this.setHeaders();
         return this.http.post(url, params,options)
             .toPromise()
             .then((response:any) => response)
@@ -30,7 +30,6 @@ export class ProductService{
 
     getJson(url:string,params?:any){
         let options:RequestOptionsArgs = {};
-        options.headers = this.setHeaders();
         options.body = params;
         return this.http.get(url,options)
             .toPromise()
@@ -40,7 +39,6 @@ export class ProductService{
 
     deleteJson(url:string,params?:any){
         let options:RequestOptionsArgs = {};
-        options.headers = this.setHeaders();
         options.body = params;
         return this.http.delete(url,options)
             .toPromise()
@@ -61,26 +59,21 @@ export class ProductService{
 
     //***********  新 ************//
     get(url:string,params?:any){
-        let options:RequestOptionsArgs = {};
-        options.headers = this.setHeaders();
-        options.body = params;
-        return this.http.get(url,options)
+        return this.http.get(url,params)
             .map((res)=>res.json())
     }
 
     post(url:string,params:any){
-        let options:RequestOptionsArgs = {};
-        options.headers = this.setHeaders();
-        return this.http.post(url,params,options)
+        return this.http.post(url,params)
             .map((res:any)=>res.json());
     }
 
-    private setHeaders():Headers{
-        let headers = new Headers();
-        headers.append("Content-Type", 'application/json');
-        headers.append("Authorization",this.jwtService.getToken());
-        return headers;
+    delete(url:string){
+        return this.http.delete(url)
+            .map((res:any)=>res.json());
     }
+
+
     private setFormDataHeaders():Headers{
         let headers = new Headers();
         headers.append("Content-Type", 'application/x-www-form-urlencoded');

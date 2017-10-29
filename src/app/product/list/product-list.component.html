@@ -31,6 +31,7 @@
                         <option value="all">全部</option>
                         <option value="inline">在售</option>
                         <option value="offline">已售</option>
+                        <option value="takendown">下架</option>
                     </select>
                 </div>
             </div>
@@ -86,9 +87,29 @@
                     </div>
                 </div>
             </div>
+
             <div class="product-text">
+                <div class="product-promotion">
+                    <ul class="promotion-props">
+                        <li *ngIf="product.status == 'inline' ">
+                            <div class="prop prop-shou">售</div>
+                        </li>
+                        <li *ngIf="product.status == 'offline' ">
+                            <div class="prop prop-mai">卖</div>
+                        </li>
+                        <li *ngIf="product.status == 'takendown' ">
+                            <div class="prop prop-xia">下</div>
+                        </li>
+                        <li *ngIf="product.recommend == true ">
+                            <div class="prop prop-recommend prop-circle">荐</div>
+                        </li>
+                        <li *ngIf="product.discount != null ">
+                            <div class="prop prop-zhe prop-circle">折</div>
+                        </li>
+                    </ul>
+                </div>
                 <span class="pro-price bg-danger">¥{{product.price}}</span>
-                <p class="box-title m-b-0" title="{{product.name}}">{{product.name}}</p>
+                <p class="box-title m-b-0 m-t-0" title="{{product.name}}">{{product.name}}</p>
                 <div class="sub-box-title">{{product.brand}}</div>
             </div>
         </div>
@@ -121,7 +142,26 @@
                 <td><span class="text-danger">¥{{product.price}}</span></td>
                 <td>{{product.discount}}</td>
                 <td>
-                    <div class="label label-table" [ngClass]="{'label-success': product.status=='inline','label-danger':product.status=='offline'}">{{product.status=='inline'?'在售':'已售出'}}</div>
+                    <div class="product-promotion">
+                        <ul class="promotion-props">
+                            <li *ngIf="product.status == 'inline' ">
+                                <div class="prop prop-shou">售</div>
+                            </li>
+                            <li *ngIf="product.status == 'offline' ">
+                                <div class="prop prop-mai">卖</div>
+                            </li>
+                            <li *ngIf="product.status == 'takendown' ">
+                                <div class="prop prop-xia">下</div>
+                            </li>
+                            <li *ngIf="product.recommend == true ">
+                                <div class="prop prop-recommend prop-circle">荐</div>
+                            </li>
+                            <li *ngIf="product.discount != null ">
+                                <div class="prop prop-zhe prop-circle">折</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--<div class="label label-table" [ngClass]="{'label-success': product.status=='inline','label-danger':product.status=='offline'}">{{product.status=='inline'?'在售':'已售出'}}</div>-->
                 </td>
                 <td class="text-nowrap table-options">
                     <i class="fa fa-eye m-r-10" title="查看" (click)="view(product)"></i>

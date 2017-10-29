@@ -28,6 +28,9 @@ import {OrderService} from "./share/service/order.service";
 import {OrderModule} from "./order/order.module";
 import {BlogModule} from "./blog/blog.module";
 import {JwtService} from "./share/service/jwt.service";
+import {ExtendHttpInterceptor} from "./share/service/ExtendHttpInterceptor";
+import {LoginService} from "./share/service/login.service";
+import {NgProgressModule} from "ngx-progressbar";
 
 
 export function highchartsFactory() {
@@ -48,7 +51,8 @@ export function highchartsFactory() {
         OrderModule,
         BlogModule,
         SimpleNotificationsModule.forRoot(),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgProgressModule
     ],
     declarations: [
         AppComponent,
@@ -58,6 +62,7 @@ export function highchartsFactory() {
         ProductEditComponent
     ],
     providers:[
+        ExtendHttpInterceptor,
         AuthGuard,
         AuthenticationService,
         NoAuthedGuard,
@@ -69,7 +74,8 @@ export function highchartsFactory() {
             useFactory: highchartsFactory
         },
         StateService,
-        OrderService
+        OrderService,
+        LoginService
     ],
     entryComponents: [AlertComponent],
     bootstrap: [ AppComponent ]

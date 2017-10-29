@@ -94,7 +94,6 @@ export class ProductListComponent implements OnInit{
     delete(product:any):void{
         this.confirmStatus = true;
         this.toDeleteProduct = product;
-
     }
 
     confirm():void{

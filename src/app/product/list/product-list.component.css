@@ -112,3 +112,45 @@
     white-space: nowrap;
     font-size: 12px;
 }
+.product-text{
+    padding-top: 5px;
+}
+ul.promotion-props{
+    margin: 0;
+    padding: 0;
+    padding-left: 2px;
+}
+ul.promotion-props li{
+    list-style: none;
+    display: inline-block;
+    padding: 1px;
+}
+ul.promotion-props li .prop{
+    border: 1px solid;
+    line-height: 16px;
+    padding: 2px 3px;
+    color: #ffffff;
+}
+.prop-recommend{
+    background-color: #7e4ed5;
+    border-color: #7e4ed5;
+}
+.prop-zhe{
+    background-color: #df5c53;
+    border-color: #df5c53;
+}
+.prop-shou{
+    background-color: #449d44;
+    border-color: #449d44;
+}
+.prop-mai{
+    background-color: #666666;
+    border-color: #666666;
+}
+.prop-xia{
+    background-color: #4c5667;
+    border-color: #4c5667;
+}
+.prop-circle{
+    border-radius: 10px;
+}

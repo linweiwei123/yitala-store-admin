@@ -98,13 +98,19 @@
                                             <label class="radio-inline p-0">
                                                 <div class="radio radio-info">
                                                     <input type="radio" name="radio" id="radio1" [formControl]="productForm.controls['status']" value="inline" checked="true">
-                                                    <label for="radio1">已发布</label>
+                                                    <label for="radio1">在售</label>
                                                 </div>
                                             </label>
                                             <label class="radio-inline">
                                                 <div class="radio radio-info">
                                                     <input type="radio" name="radio" id="radio2" [formControl]="productForm.controls['status']" value="offline">
-                                                    <label for="radio2">下架</label>
+                                                    <label for="radio2">售出</label>
+                                                </div>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <div class="radio radio-info">
+                                                    <input type="radio" name="radio" id="radio3" [formControl]="productForm.controls['status']" value="takendown">
+                                                    <label for="radio3">下架</label>
                                                 </div>
                                             </label>
                                         </div>
